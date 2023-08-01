@@ -8,6 +8,8 @@ public class CatalogApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CatalogApplication.class, args);
+
+		System.out.println("Hello Catalog Service");
 	}
 
 }

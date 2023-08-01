@@ -6,10 +6,15 @@ plugins {
 }
 
 group = 'dev.mkuwan'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 
 java {
 	sourceCompatibility = '17'
+}
+
+// plain.jarを作成しない
+jar {
+	enabled = false
 }
 
 configurations {
