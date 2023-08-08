@@ -1,6 +1,6 @@
-package dev.mkuwan.catalog.api;
+package dev.mkuwan.customer.catalog.api;
 
-import dev.mkuwan.catalog.usecase.ICatalogUseCase;
+import dev.mkuwan.customer.catalog.usecase.ICatalogUseCase;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

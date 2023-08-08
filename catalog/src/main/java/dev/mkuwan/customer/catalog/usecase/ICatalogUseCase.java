@@ -1,4 +1,4 @@
-package dev.mkuwan.catalog.usecase;
+package dev.mkuwan.customer.catalog.usecase;
 
 import org.springframework.stereotype.Service;
 

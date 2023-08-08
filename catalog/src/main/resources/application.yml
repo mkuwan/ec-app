@@ -1,1 +1,23 @@
+server:
+  port: 8080
 
+spring:
+  #  in use mariadb
+  datasource:
+    username: root
+    password: mariapassword
+    url: jdbc:mariadb://localhost:3306/sampledb
+    driver-class-name: org.mariadb.jdbc.Driver
+  sql:
+    init:
+      encoding: utf-8
+      mode: always
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDB106Dialect
+        format_sql: true
+        enable_lazy_load_no_trans: true
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
