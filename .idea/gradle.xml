@@ -12,10 +12,10 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/catalog" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/admin-stock" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/catalog" />
+            <option value="$PROJECT_DIR$/admin-stock" />
           </set>
         </option>
       </GradleProjectSettings>
