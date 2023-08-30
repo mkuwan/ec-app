@@ -1,6 +1,7 @@
 package dev.mkuwan.adminstock.domain.valueobject;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -8,7 +9,7 @@ import java.time.LocalDate;
  * @param itemName 商品名
  * @param amount 商品数
  * @param costPrice 仕入れ価格
- * @param localDate 仕入れ日
+ * @param stockingDate 仕入れ日
  * @param reason 変更事由
  * @param description 備考
  * @param wareHouse 倉庫
@@ -17,10 +18,14 @@ public record StockItem(String stockItemId,
                         String itemName,
                         int amount,
                         long costPrice,
-                        LocalDate localDate,
+                        LocalDate stockingDate,
                         String reason,
                         String description,
-                        WareHouse wareHouse) {
+                        WareHouse wareHouse,
+                        LocalDateTime createdAt,
+                        StockUser creator,
+                        LocalDateTime updatedAt,
+                        StockUser updater) {
 
     public StockItem {
         if (amount < 0) {

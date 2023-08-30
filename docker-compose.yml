@@ -44,14 +44,15 @@ services:
     volumes:
       - ./data/redis:/data
 
-  mariadb:
-    container_name: mariadb
+
+  mariadb_stock:
+    container_name: mariadb_stock
     hostname: mariadb
     image: mariadb
     environment:
       # user: root
       MYSQL_ROOT_PASSWORD: mariapassword
-      MYSQL_DATABASE: sampledb
+      MYSQL_DATABASE: stockdb
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     command:
@@ -62,9 +63,9 @@ services:
     networks:
       - mariadbnet
     ports:
-      - "3306:3306"
+      - "13306:3306"
     volumes:
-      - mariadb:/var/lib/mysql
+      - mariadb_stock:/var/lib/mysql
     restart: always #unless-stopped
 
   phpmyadmin:
@@ -78,36 +79,9 @@ services:
       PMA_VERBOSE: sampledb
       PMA_PORT: 3306
     depends_on:
-      - mariadb
+      - mariadb_stock
     networks:
       - mariadbnet
-
-  postgres:
-    restart: always
-    image: postgres
-    container_name: postgres
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=sampledb
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgresql:/var/lib/postgresql
-      - postgresql_data:/var/lib/postgresql/data
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    ports:
-      - "8432:80"
-    volumes:
-      - pgadmin:/var/lib/pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: example@example.com
-      PGADMIN_DEFAULT_PASSWORD: password
-    depends_on:
-      - postgres
 
   rabbitmq:
     image: rabbitmq:management
@@ -116,34 +90,6 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
-
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    container_name: zookeeper
-    environment:
-      ZOOKEEPER_SERVER_ID: 1
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    ports:
-      - "2181:2181"
-
-  kafka:
-    image: confluentinc/cp-kafka:latest
-    container_name: kafka
-    ports:
-      - "9092:9092"
-    depends_on:
-      - zookeeper
-    environment:
-      - KAFKA_BROKER_ID=1
-      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
-      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
-      - KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1
-      - KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1
-
 
 networks:
   mongo_db_net:
@@ -155,7 +101,7 @@ volumes:
   mongo:
   configdb:
   pgadmin:
-  mariadb:
+  mariadb_stock:
   postgresql:
   postgresql_data:
 

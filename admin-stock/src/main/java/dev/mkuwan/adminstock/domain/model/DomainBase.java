@@ -15,21 +15,27 @@ public abstract class DomainBase {
     private final LocalDateTime updatedAt;
     private final StockUser updater;
 
-    public DomainBase(LocalDateTime createdAt, StockUser creator, StockUser updater) {
+    public DomainBase(LocalDateTime createdAt, StockUser creator, LocalDateTime updatedAt, StockUser updater) {
         this.createdAt = createdAt;
         this.creator = creator;
+        this.updatedAt = updatedAt;
+        this.updater = updater;
 
-        /**
-         * 更新者がある場合は更新日時・更新者をセットします
-         */
-        if(updater != null){
-            this.updatedAt = LocalDateTime.now();
-            this.updater = updater;
-        } else {
-            this.updatedAt = null;
-            this.updater = null;
-        }
     }
 
+    public LocalDateTime CreatedAt(){
+        return createdAt;
+    }
 
+    public StockUser Creator(){
+        return creator;
+    }
+
+    public LocalDateTime UpdatedAt(){
+        return updatedAt;
+    }
+
+    public StockUser Updater(){
+        return updater;
+    }
 }

@@ -16,7 +16,7 @@ public class StockModel extends DomainBase implements IAggregateRoot {
     private long salesPrice;
     private final int stockAmount;
     private int purchaseLimit;
-    private final float averageCostPrice;
+    private float averageCostPrice;
     private final String description;
     private final List<StockItem> stockItems;
     private final String itemSerialNumber;
@@ -26,21 +26,22 @@ public class StockModel extends DomainBase implements IAggregateRoot {
     private final static float maximumSalesPriceRate = 3f;
 
     public StockModel(String stockId, DisplayName displayName, long salesPrice, int stockAmount,
-                      int purchaseLimit, float averageCostPrice, String description,
+                      int purchaseLimit, String description,
                       List<StockItem> stockItems, String itemSerialNumber, boolean canOrder,
-                      LocalDateTime createdAt, StockUser creator, StockUser updater) {
-        super(createdAt, creator, updater);
+                      LocalDateTime createdAt, StockUser creator, LocalDateTime updatedAt, StockUser updater) {
+        super(createdAt, creator, updatedAt, updater);
         this.stockId = stockId;
         this.displayName = displayName;
-        this.salesPrice = salesPrice;
         this.stockAmount = stockAmount;
-        this.purchaseLimit = purchaseLimit;
-        this.averageCostPrice = averageCostPrice;
+
         this.description = description;
         this.stockItems = stockItems;
         this.itemSerialNumber = itemSerialNumber;
         this.canOrder = canOrder;
+        this.averageCostPrice = AverageCostPrice();
 
+        fixLimitedAmount(purchaseLimit);
+        determineSalesPrice(salesPrice);
     }
 
     public String StockId() {
@@ -63,7 +64,20 @@ public class StockModel extends DomainBase implements IAggregateRoot {
         return purchaseLimit;
     }
 
+    /**
+     * 平均仕入れ価格は在庫のある商品の仕入れ価格の平均を四捨五入したもの
+     * @return float(実際は整数値 nn.0とします)
+     */
     public float AverageCostPrice() {
+        var average = stockItems.stream()
+                .filter(x -> x.amount() > 0)
+                .mapToLong(x -> x.costPrice())
+                .average();
+        if(average.isPresent()){
+            averageCostPrice = Math.round(average.getAsDouble());
+        } else {
+            averageCostPrice = 0f;
+        }
         return averageCostPrice;
     }
 
@@ -89,28 +103,48 @@ public class StockModel extends DomainBase implements IAggregateRoot {
      * @param salesPrice
      */
     public void determineSalesPrice(long salesPrice){
-        var average = (float)stockItems.stream()
-                .mapToLong(x -> x.costPrice())
-                .sum() / (float) stockItems.stream().count();
-        if(average * minimumSalesPriceRate < salesPrice){
-            var message = String.format("販売価格は平均仕入れ額{0}の{1}倍以上としてください", average, minimumSalesPriceRate);
+        var average = averageCostPrice;
+        if(average * minimumSalesPriceRate > salesPrice){
+            var message = String.format("販売価格は平均仕入れ額%s円の%s倍以上としてください", (long)average, minimumSalesPriceRate);
             throw new IllegalArgumentException(message);
         }
 
-        if(average * maximumSalesPriceRate > salesPrice){
-            var message = String.format("販売価格は平均仕入れ額{0}の{1}倍以下としてください", average, maximumSalesPriceRate);
+        if(average * maximumSalesPriceRate < salesPrice){
+            var message = String.format("販売価格は平均仕入れ額%s円の%s倍以下としてください", (long)average, maximumSalesPriceRate);
             throw new IllegalArgumentException(message);
         }
 
         this.salesPrice = salesPrice;
     }
 
-
-    public void fixLimitedAmount(int amount){
-        if(amount <= 0){
+    /**
+     * 購入限度数
+     * @param limitedAmount
+     */
+    public void fixLimitedAmount(int limitedAmount){
+        if(limitedAmount <= 0){
             throw new IllegalArgumentException("購入限度数は1以上としてください");
         }
 
-        this.purchaseLimit = amount;
+        this.purchaseLimit = limitedAmount;
+    }
+
+    public void addStockItem(StockItem item){
+        this.StockItems().add(item);
+    }
+
+    public void deleteStockItem(StockItem item){
+        this.StockItems().remove(item);
+    }
+
+    public void modifyStockItem(StockItem item){
+        var existItem = this.stockItems
+                .stream()
+                .filter(x -> x.stockItemId() == item.stockItemId())
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("指定された商品が見つかりませんでした"));
+
+        this.stockItems.remove(existItem);
+        this.stockItems.add(item);
     }
 }

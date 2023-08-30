@@ -50,6 +50,7 @@ class DisplayNameTest {
 
         // assertion
         assertEquals(name, displayName.name());
+        assertDoesNotThrow(() -> new DisplayName(name));
     }
 
     @Test
@@ -62,6 +63,7 @@ class DisplayNameTest {
 
         // assertion
         assertEquals(name, displayName.name());
+        assertDoesNotThrow(() -> new DisplayName(name));
     }
 
     @Test
@@ -74,5 +76,6 @@ class DisplayNameTest {
 
         // assertion
         assertEquals(name, displayName.name());
+        assertDoesNotThrow(() -> new DisplayName(name));
     }
 }

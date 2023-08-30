@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,6 +21,8 @@ public class StockItemTest {
     private String reason;
     private String description;
     private WareHouse wareHouse = new WareHouse(UUID.randomUUID().toString(), "テスト倉庫");
+    private StockUser user01 = new StockUser(UUID.randomUUID().toString(), "作成者");;
+    private StockUser user02 = new StockUser(UUID.randomUUID().toString(), "更新者");;
 
     @Test
     void amountIsLessThanZero_ThrowException(){
@@ -31,7 +34,8 @@ public class StockItemTest {
         // act
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             var item = new StockItem(stockItemId, itemName,
-                    amount, costPrice, localDate, reason, description, wareHouse);
+                    amount, costPrice, localDate, reason, description, wareHouse,
+                    LocalDateTime.now(), user01, LocalDateTime.now(), user02);
         });
 
         // assertion
@@ -49,10 +53,14 @@ public class StockItemTest {
 
         // act
         var item = new StockItem(stockItemId, itemName,
-                amount, costPrice, localDate, reason, description, wareHouse);
+                amount, costPrice, localDate, reason, description, wareHouse,
+                LocalDateTime.now(), user01, LocalDateTime.now(), user02);
 
         // assertion
         assertEquals(amount, item.amount());
+        assertDoesNotThrow(() -> new StockItem(stockItemId, itemName,
+                amount, costPrice, localDate, reason, description, wareHouse,
+                LocalDateTime.now(), user01, LocalDateTime.now(), user02));
     }
 
     @Test
@@ -65,7 +73,8 @@ public class StockItemTest {
         // act
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             var item = new StockItem(stockItemId, itemName,
-                    amount, costPrice, localDate, reason, description, wareHouse);
+                    amount, costPrice, localDate, reason, description, wareHouse,
+                    LocalDateTime.now(), user01, LocalDateTime.now(), user02);
         });
 
         // assertion
@@ -83,10 +92,14 @@ public class StockItemTest {
 
         // act
         var item = new StockItem(stockItemId, itemName,
-                amount, costPrice, localDate, reason, description, wareHouse);
+                amount, costPrice, localDate, reason, description, wareHouse,
+                LocalDateTime.now(), user01, LocalDateTime.now(), user02);
 
         // assertion
         assertEquals(costPrice, item.costPrice());
+        assertDoesNotThrow(() -> new StockItem(stockItemId, itemName,
+                amount, costPrice, localDate, reason, description, wareHouse,
+                LocalDateTime.now(), user01, LocalDateTime.now(), user02));
     }
 
     @Test
@@ -99,7 +112,8 @@ public class StockItemTest {
         // act
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             var item = new StockItem(stockItemId, itemName,
-                    amount, costPrice, localDate, reason, description, wareHouse);
+                    amount, costPrice, localDate, reason, description, wareHouse,
+                    LocalDateTime.now(), user01, LocalDateTime.now(), user02);
         });
 
         // assertion
@@ -118,7 +132,8 @@ public class StockItemTest {
         // act
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             var item = new StockItem(stockItemId, itemName,
-                    amount, costPrice, localDate, reason, description, wareHouse);
+                    amount, costPrice, localDate, reason, description, wareHouse,
+                    LocalDateTime.now(), user01, LocalDateTime.now(), user02);
         });
 
         // assertion
@@ -136,9 +151,13 @@ public class StockItemTest {
 
         // act
         var item = new StockItem(stockItemId, itemName,
-                amount, costPrice, localDate, reason, description, wareHouse);
+                amount, costPrice, localDate, reason, description, wareHouse,
+                LocalDateTime.now(), user01, LocalDateTime.now(), user02);
 
         // assertion
         assertEquals(itemName, item.itemName());
+        assertDoesNotThrow(() -> new StockItem(stockItemId, itemName,
+                amount, costPrice, localDate, reason, description, wareHouse,
+                LocalDateTime.now(), user01, LocalDateTime.now(), user02));
     }
 }
