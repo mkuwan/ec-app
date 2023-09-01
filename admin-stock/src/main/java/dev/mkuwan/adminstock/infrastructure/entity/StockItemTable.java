@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 @Entity
 @Table(name = "StockItemTable")
 public class StockItemTable {
@@ -24,20 +25,20 @@ public class StockItemTable {
     private String reason;
     private String description;
 
-    private String stockId;
-    private String wareHouseId;
+//    private String stockId;
+//    private String wareHouseId;
 
     @ManyToOne
     private WareHouseTable wareHouseTable;
 
     private LocalDateTime createdAt;
 
-    @OneToOne
+    @ManyToOne
     private UserTable creator;
 
     private LocalDateTime updatedAt;
 
-    @OneToOne
+    @ManyToOne
     private UserTable updater;
 
 }

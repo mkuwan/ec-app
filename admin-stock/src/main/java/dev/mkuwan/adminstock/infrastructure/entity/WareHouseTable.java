@@ -9,6 +9,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 @Entity
 @Table(name = "WareHouseTable")
 public class WareHouseTable {
@@ -17,6 +18,6 @@ public class WareHouseTable {
     private String wareHouseId;
     private String wareHouseName;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
+    @OneToMany //(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
     private Set<StockItemTable> StockItems;
 }

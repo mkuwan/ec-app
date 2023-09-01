@@ -1,10 +1,7 @@
 package dev.mkuwan.adminstock.infrastructure.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -13,6 +10,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 @Entity
 @Table(name = "StockTable")
 public class StockTable {
@@ -27,7 +25,7 @@ public class StockTable {
     private float averageCostPrice;
     private String description;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
+    @OneToMany //(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
     private Set<StockItemTable> stockItems;
 
     private String itemSerialNumber;
@@ -35,11 +33,12 @@ public class StockTable {
 
     private LocalDateTime createdAt;
 
-    @OneToOne
+    @ManyToOne
     private UserTable creator;
+
 
     private LocalDateTime updatedAt;
 
-    @OneToOne
+    @ManyToOne
     private UserTable updater;
 }

@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-09-01T11:29:58.399Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="iMhsO2XkIEerl3UBgMhr" version="21.6.8" type="device" pages="12">
+<mxfile host="Electron" modified="2023-09-01T11:24:25.259Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="fqSL2KKUGjLOKpQc4pOu" version="21.6.8" type="device" pages="12">
   <diagram id="cMnE_LYomMNR2ONjdC-j" name="基本概念">
     <mxGraphModel dx="954" dy="674" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -2263,7 +2263,7 @@
           <mxGeometry x="30" y="830" width="780" height="910" as="geometry" />
         </mxCell>
         <mxCell id="8pQMUKYYNMsDeAE2OiFM-1" value="CartUseCase" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontSize=12;strokeColor=#7EA6E0;strokeWidth=2;fillColor=default;" parent="1" vertex="1">
-          <mxGeometry x="70" y="890" width="350" height="112" as="geometry" />
+          <mxGeometry x="70" y="890" width="350" height="138" as="geometry" />
         </mxCell>
         <mxCell id="8pQMUKYYNMsDeAE2OiFM-2" value="− " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="8pQMUKYYNMsDeAE2OiFM-1" vertex="1">
           <mxGeometry y="26" width="350" height="26" as="geometry" />
@@ -2274,8 +2274,11 @@
         <mxCell id="8pQMUKYYNMsDeAE2OiFM-10" value="+ &lt;Implement&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="8pQMUKYYNMsDeAE2OiFM-1" vertex="1">
           <mxGeometry y="60" width="350" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="tiBiN334JA7a4lbsJBO_-2" value="+ getCartByBuyerId(String buyerId): CartDto&#xa;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;fontStyle=0" parent="8pQMUKYYNMsDeAE2OiFM-1" vertex="1">
+        <mxCell id="tiBiN334JA7a4lbsJBO_-1" value="+ getCartByCartId(String cartId): CartDto&#xa;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;fontStyle=0" parent="8pQMUKYYNMsDeAE2OiFM-1" vertex="1">
           <mxGeometry y="86" width="350" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="tiBiN334JA7a4lbsJBO_-2" value="+ getCartByBuyerId(String buyerId): CartDto&#xa;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;fontStyle=0" parent="8pQMUKYYNMsDeAE2OiFM-1" vertex="1">
+          <mxGeometry y="112" width="350" height="26" as="geometry" />
         </mxCell>
         <mxCell id="a6Mhevap_WYSAMgIg1wo-1" value="«ICartRepository»&lt;br&gt;&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;b style=&quot;background-color: initial;&quot;&gt;save(StockModel model)&lt;/b&gt;&lt;br&gt;&lt;/div&gt;&lt;b&gt;&lt;div style=&quot;text-align: left;&quot;&gt;getCartByCartId(String cartId)&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;getCartByBuyer(String buyerId)&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;/b&gt;" style="html=1;fontSize=12;strokeColor=#7EA6E0;strokeWidth=2;fillColor=default;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="839" y="1918" width="280" height="102" as="geometry" />

@@ -41,35 +41,56 @@ public class StockRepository implements IStockRepository {
 
     @Override
     public StockModel getStock(String stockId) {
-        var stock = stockTableJpaRepository.findById(stockId);
-        if(!stock.isPresent())
+        var stockEntity = stockTableJpaRepository.findById(stockId)
+                .orElseGet(null);
+        if(stockEntity == null)
             return null;
 
-        var stockEntity = stock.get();
+        System.out.println("Change StockEntity to StockModel");
         return fromTable(stockEntity);
     }
 
-    private StockModel fromTable(StockTable stockTable){
+    private static StockModel fromTable(StockTable stockTable){
         if(stockTable == null)
             throw new IllegalStateException("テーブルデータが初期化されていません");
 
         List<StockItem> stockItems = new ArrayList<>();
-        if(stockTable.getStockItems() != null){
+        if(stockTable.getStockItems().size() != 0){
+            System.out.println("商品リストサイズ:= " + stockTable.getStockItems().size());
             stockTable.getStockItems().forEach(x -> {
+                System.out.println("商品:= " + x.getItemId() + x.getItemName() + x.getAmount() +
+                        x.getCostPrice() +  x.getStockingDate() + x.getReason());
+                System.out.println("倉庫名:= " + x.getWareHouseTable().getWareHouseName());
+
                 stockItems.add(new StockItem(x.getItemId(), x.getItemName(), x.getAmount(),
                         x.getCostPrice(), x.getStockingDate(), x.getReason(),
-                        x.getDescription(), new WareHouse(x.getWareHouseId(), x.getWareHouseId()),
-                        x.getCreatedAt(), new StockUser(x.getCreator().getUserId(), x.getCreator().getUserName()),
-                        x.getUpdatedAt(), new StockUser(x.getUpdater().getUserId(), x.getUpdater().getUserName())));
+                        x.getDescription(), new WareHouse(x.getWareHouseTable().getWareHouseId(), x.getWareHouseTable().getWareHouseName()),
+                        x.getCreatedAt(),
+                        new StockUser(fromUserEntity(x.getCreator()).userId(), fromUserEntity(x.getCreator()).userName()),
+                        x.getUpdatedAt(),
+                        new StockUser(fromUserEntity(x.getUpdater()).userId(), fromUserEntity(x.getUpdater()).userName())));
             });
         }
+
+        System.out.println("商品数:= " + stockItems.size());
+
+        var creator = fromUserEntity(stockTable.getCreator());
 
         return new StockModel(stockTable.getStockId(), new DisplayName(stockTable.getDisplayName()),
                 stockTable.getSalesPrice(), stockTable.getStockAmount(), stockTable.getPurchaseLimit(),
                 stockTable.getDescription(), stockItems, stockTable.getItemSerialNumber(),
                 stockTable.isCanOrder(),
-                stockTable.getCreatedAt(), new StockUser(stockTable.getCreator().getUserId(), stockTable.getCreator().getUserName()),
-                stockTable.getUpdatedAt(), new StockUser(stockTable.getUpdater().getUserId(), stockTable.getUpdater().getUserName()));
+                stockTable.getCreatedAt(),
+                new StockUser(fromUserEntity(stockTable.getCreator()).userId(), fromUserEntity(stockTable.getCreator()).userName()),
+                stockTable.getUpdatedAt(),
+                new StockUser(fromUserEntity(stockTable.getUpdater()).userId(), fromUserEntity(stockTable.getUpdater()).userName()));
+    }
+
+    private static StockUser fromUserEntity(UserTable userTable){
+        if(userTable == null)
+            return new StockUser(null, null);
+
+        return new StockUser(userTable.getUserId(), userTable.getUserName());
     }
 
     private StockTable toTable(StockModel model){

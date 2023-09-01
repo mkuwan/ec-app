@@ -32,12 +32,14 @@ public class StockModel extends DomainBase implements IAggregateRoot {
         super(createdAt, creator, updatedAt, updater);
         this.stockId = stockId;
         this.displayName = displayName;
-        this.stockAmount = stockAmount;
+
 
         this.description = description;
         this.stockItems = stockItems;
         this.itemSerialNumber = itemSerialNumber;
         this.canOrder = canOrder;
+
+        this.stockAmount = StockAmount();
         this.averageCostPrice = AverageCostPrice();
 
         fixLimitedAmount(purchaseLimit);
@@ -57,24 +59,43 @@ public class StockModel extends DomainBase implements IAggregateRoot {
     }
 
     public int StockAmount() {
-        return stockAmount;
+        return stockItems.stream()
+                .filter(x -> x.amount() > 0)
+                .mapToInt(x -> x.amount())
+                .sum();
     }
 
     public int PurchaseLimit() {
         return purchaseLimit;
     }
 
+
     /**
      * 平均仕入れ価格は在庫のある商品の仕入れ価格の平均を四捨五入したもの
      * @return float(実際は整数値 nn.0とします)
      */
     public float AverageCostPrice() {
-        var average = stockItems.stream()
+//        var average = stockItems.stream()
+//                .filter(x -> x.amount() > 0)
+//                .mapToLong(x -> x.costPrice())
+//                .peek(x -> System.out.println(x))
+//                .average();
+        var sumCostPrice = stockItems.stream()
                 .filter(x -> x.amount() > 0)
-                .mapToLong(x -> x.costPrice())
-                .average();
-        if(average.isPresent()){
-            averageCostPrice = Math.round(average.getAsDouble());
+                .mapToDouble(x -> x.costPrice() * x.amount())
+                .sum();
+
+        var sumItemAmount = stockItems.stream()
+                .filter(x -> x.amount() > 0)
+                .mapToDouble(x -> x.amount())
+                .sum();
+
+        double average = 0d;
+        if(sumItemAmount > 0)
+            average = sumCostPrice / sumItemAmount;
+
+        if(sumItemAmount > 0){
+            averageCostPrice = Math.round(average);
         } else {
             averageCostPrice = 0f;
         }
@@ -104,6 +125,9 @@ public class StockModel extends DomainBase implements IAggregateRoot {
      */
     public void determineSalesPrice(long salesPrice){
         var average = averageCostPrice;
+
+        System.out.println("販売価格:= " + salesPrice + ", 平均売買価格:= " + averageCostPrice);
+
         if(average * minimumSalesPriceRate > salesPrice){
             var message = String.format("販売価格は平均仕入れ額%s円の%s倍以上としてください", (long)average, minimumSalesPriceRate);
             throw new IllegalArgumentException(message);
