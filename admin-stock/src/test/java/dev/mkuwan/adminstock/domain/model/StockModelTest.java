@@ -645,7 +645,7 @@ class StockModelTest {
      * 購入限度数が1未満
      */
     @Test
-    void LimitedAmounかLessThanOne_ThrowError(){
+    void LimitedAmountLessThanOne_ThrowError(){
         // arrange
         var wareHouseId = UUID.randomUUID().toString();
         var itemId01 = UUID.randomUUID().toString();

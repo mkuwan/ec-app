@@ -50,6 +50,19 @@ public class StockItemDto {
                 .description(item.description())
                 .wareHouseId(item.wareHouse().wareHouseId())
                 .wareHouseName(item.wareHouse().wareHouseName())
+                .createdAt(item.createdAt())
+                .creatorId(UserIsNullThenReturnNull(item.creator()).userId())
+                .creatorName(UserIsNullThenReturnNull(item.creator()).userName())
+                .updatedAt(item.updatedAt())
+                .updaterId(UserIsNullThenReturnNull(item.updater()).userId())
+                .updaterName(UserIsNullThenReturnNull(item.updater()).userName())
                 .build();
+    }
+
+    private static StockUser UserIsNullThenReturnNull(StockUser user){
+        if(user == null)
+            return new StockUser(null, null);
+
+        return new StockUser(user.userId(), user.userName());
     }
 }

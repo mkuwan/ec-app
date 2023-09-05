@@ -36,9 +36,6 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class StockUsecaseServiceTest {
 
-//    @Mock
-//    private IStockUsecaseService stockUsecaseService;
-
     @Mock
     private IStockRepository stockRepositoryMock;
 

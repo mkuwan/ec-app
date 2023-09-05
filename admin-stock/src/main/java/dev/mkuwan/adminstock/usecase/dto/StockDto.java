@@ -12,6 +12,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Builder
@@ -58,6 +59,7 @@ public class StockDto {
         return model;
     }
 
+
     public static StockDto fromModel(StockModel model){
         List<StockItemDto> stockItemDtoList = new ArrayList<>();
         if(model.StockItems() != null){
@@ -77,14 +79,21 @@ public class StockDto {
                 .stockItems(stockItemDtoList)
                 .itemSerialNumber(model.ItemSerialNumber())
                 .canOrder(model.CanOrder())
-                .creatorId(model.Creator().userId())
-                .creatorName(model.Creator().userName())
-                .updaterId(model.Updater().userId())
-                .updaterName(model.Updater().userName())
+                .creatorId(UserIsNullThenReturnNull(model.Creator()).userId())
+                .creatorName(UserIsNullThenReturnNull(model.Creator()).userName())
+                .updaterId(UserIsNullThenReturnNull(model.Updater()).userId())
+                .updaterName(UserIsNullThenReturnNull(model.Updater()).userName())
                 .createdAt(model.CreatedAt())
                 .updatedAt(model.UpdatedAt())
                 .build();
 
         return dto;
+    }
+
+    private static StockUser UserIsNullThenReturnNull(StockUser user){
+        if(user == null)
+            return new StockUser(null, null);
+
+        return new StockUser(user.userId(), user.userName());
     }
 }
