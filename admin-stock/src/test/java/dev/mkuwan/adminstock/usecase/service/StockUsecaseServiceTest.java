@@ -13,8 +13,11 @@ import dev.mkuwan.adminstock.usecase.event.StockEventListener;
 import dev.mkuwan.adminstock.usecase.event.StockEventPublisher;
 import dev.mkuwan.adminstock.domain.event.StockUpdatedEventValue;
 import org.hibernate.annotations.NaturalId;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -42,11 +45,22 @@ class StockUsecaseServiceTest {
     @Autowired
     private StockEventPublisher stockEventPublisher;
 
-    @NaturalId
-    private StockEventListener stockEventListener;
 
     @MockBean
     private StockEventListener stockEventListenerMock;
+
+    private AutoCloseable autoCloseable;
+
+    @BeforeEach
+    void setUp(){
+        autoCloseable = MockitoAnnotations.openMocks(this);
+
+    }
+
+    @AfterEach
+    void tearDown() throws Exception {
+        autoCloseable.close();
+    }
 
     private StockModel stubModelById(String stockId){
         var wareHouseId = UUID.randomUUID().toString();
