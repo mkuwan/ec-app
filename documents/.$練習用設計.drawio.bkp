@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-09-06T04:59:10.780Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="XWC1eRym_CJGpNYr9qnk" version="21.6.8" type="device" pages="13">
+<mxfile host="Electron" modified="2023-09-07T03:47:32.407Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="-6Xwvxc7DPn2BNVSznbU" version="21.6.8" type="device" pages="13">
   <diagram id="cMnE_LYomMNR2ONjdC-j" name="基本概念">
-    <mxGraphModel dx="1072" dy="1035" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1093" dy="880" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -163,7 +163,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="JvlNqoKr2HIumVleaTyp" name="基本アーキテクチャ">
-    <mxGraphModel dx="1193" dy="843" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1421" dy="1144" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -192,7 +192,7 @@
         <mxCell id="2fsXtulrNyITply43Q9y-16" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.158;entryY=0.011;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=18;startArrow=classic;startFill=1;exitX=0.101;exitY=1.033;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="2fsXtulrNyITply43Q9y-3" target="2fsXtulrNyITply43Q9y-14" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="2fsXtulrNyITply43Q9y-3" value="UseCase (Application Service：インターフェースと実装)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
+        <mxCell id="2fsXtulrNyITply43Q9y-3" value="UseCase (Application Service)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
           <mxGeometry x="50" y="431.5" width="670" height="67" as="geometry" />
         </mxCell>
         <mxCell id="2fsXtulrNyITply43Q9y-4" value="Domain (DomainModel, ValueObject, Repositoryのインターフェース)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
@@ -2569,7 +2569,7 @@
         <mxCell id="nYsykkAlIzsV1Kry4itJ-36" value="+ 購入予定数" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=14;" parent="nYsykkAlIzsV1Kry4itJ-33" vertex="1">
           <mxGeometry y="163.62277735145364" width="160" height="34.40569433786341" as="geometry" />
         </mxCell>
-        <mxCell id="nYsykkAlIzsV1Kry4itJ-37" value="+ 商品情報:購入限度数" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=14;" parent="nYsykkAlIzsV1Kry4itJ-33" vertex="1">
+        <mxCell id="nYsykkAlIzsV1Kry4itJ-37" value="+ 商品購入限度数" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=14;" parent="nYsykkAlIzsV1Kry4itJ-33" vertex="1">
           <mxGeometry y="198.02847168931703" width="160" height="30.036717279087096" as="geometry" />
         </mxCell>
         <mxCell id="nYsykkAlIzsV1Kry4itJ-38" value="購入者" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontSize=14;strokeColor=default;fillColor=none;" parent="nYsykkAlIzsV1Kry4itJ-25" vertex="1">
