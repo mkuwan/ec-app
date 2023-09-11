@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @Transactional
@@ -51,6 +52,9 @@ class CartRepositoryTest {
 
     @Mock
     private CartItemJpaRepository cartItemJpaRepositoryMock;
+
+    @Mock
+    private CatalogueItemJpaRepository catalogueItemJpaRepositoryMock;
 
     private AutoCloseable autoCloseable;
 
@@ -198,7 +202,7 @@ class CartRepositoryTest {
     @Test
     void withMockJpaRepositoryTest(){
         // given
-        var cartRepositoryWithMock = new CartRepository(cartJpaRepositoryMock, cartItemJpaRepositoryMock, catalogueItemJpaRepository);
+        var cartRepositoryWithMock = new CartRepository(cartJpaRepositoryMock, cartItemJpaRepositoryMock, catalogueItemJpaRepositoryMock);
         var catalogueItem = catalogueItemJpaRepository.findById("item-id-1").get();
 
         // when
@@ -224,6 +228,7 @@ class CartRepositoryTest {
 
         var capturedItem = cartItemEntityArgumentCaptor.getValue();
         assertEquals(catalogueItem.getCatalogItemId(), capturedItem.getItemId());
+
     }
 
     @Test
@@ -273,6 +278,8 @@ class CartRepositoryTest {
                 .findFirst()
                 .get();
         assertEquals(3, inCartItem.expectedAmount());
+
+
     }
 
 }

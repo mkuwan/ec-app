@@ -11,6 +11,7 @@ import dev.mkukwan.cart.usecase.dto.CartItemDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -20,6 +21,8 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 class CartUseCaseServiceTest {
@@ -34,6 +37,9 @@ class CartUseCaseServiceTest {
 
     @Autowired
     private ICartUseCaseService cartUseCaseService;
+
+    @Mock
+    private CatalogueItemJpaRepository catalogueItemJpaRepositoryMock;
 
     @BeforeEach
     void setup(){
@@ -155,8 +161,11 @@ class CartUseCaseServiceTest {
         // assertion
         var resultItem = cartItemJpaRepository.findByCartIdAndItemId(cartId, itemDto2.getItemId()).get();
         assertEquals(2, resultItem.getItemAmount());
+        assertEquals(2, resultItem.getItemAmount());
         assertEquals(3000, resultItem.getItemPrice());
         assertEquals(10, resultItem.getItemLimitedCount());
+
+
     }
 
 }

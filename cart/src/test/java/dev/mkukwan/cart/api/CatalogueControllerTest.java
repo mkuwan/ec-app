@@ -37,7 +37,7 @@ class CatalogueControllerTest {
 
     @BeforeEach
     void setUp(){
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 15; i++) {
             CatalogueItemEntity catalogueItem = new CatalogueItemEntity("item-id-" + (i + 1),
                     "商品" + (i + 1), 100 * (i + 1), i + 1, 5);
             catalogueItemJpaRepository.save(catalogueItem);
@@ -65,7 +65,7 @@ class CatalogueControllerTest {
         var catalogueList = Arrays.asList(mapper.readValue(result.getResponse().getContentAsString(), CatalogueViewModel[].class));
 
         // assertion (CommandLineRunnerでDomoデータ作成すると10となりますので注意
-        assertEquals(5, catalogueList.size());
+        assertEquals(10, catalogueList.size());
 
     }
 }
