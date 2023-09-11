@@ -14,9 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity(name = "Cart")
+@Entity(name = "CartTable")
 public class CartEntity {
     @Id
+    private String Id;
+
     private String cartId;
 
     private String buyerId;

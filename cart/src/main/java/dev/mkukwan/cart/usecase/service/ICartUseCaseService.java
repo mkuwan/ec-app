@@ -8,8 +8,8 @@ public interface ICartUseCaseService {
 
     CartDto getCartByCartId(String cartId);
 
-    CartDto putItemIntoCart(String cartId, String userId, CartItemDto cartItemDto);
+    CartDto putItemIntoCart(String cartId, CartItemDto cartItemDto);
 
-    CartDto modifyCartItem(String cartId, String userId, CartItemDto cartItemDto);
+    CartDto modifyCartItem(String cartId, CartItemDto cartItemDto);
 
 }

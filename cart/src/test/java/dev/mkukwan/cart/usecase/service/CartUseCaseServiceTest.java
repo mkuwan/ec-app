@@ -94,7 +94,7 @@ class CartUseCaseServiceTest {
                 .itemAmount(1)
                 .itemLimitedCount(itemEntity.getPurchaseLimit())
                 .build();
-        var cartDto = cartUseCaseService.putItemIntoCart(cartId, buyerId, cartItemDto);
+        var cartDto = cartUseCaseService.putItemIntoCart(cartId, cartItemDto);
 
         // assertion
         assertNotEquals(cartId, cartDto.getCartId());
@@ -107,9 +107,10 @@ class CartUseCaseServiceTest {
     @Test
     void modifyCartItem_Success(){
         // arrange
+        var id = UUID.randomUUID().toString();
         var cartId = UUID.randomUUID().toString();
         var buyerId = UUID.randomUUID().toString();
-        CartEntity cartEntity = new CartEntity(cartId, buyerId, null);
+        CartEntity cartEntity = new CartEntity(id, cartId, buyerId, null);
         cartJpaRepository.save(cartEntity);
         var catalogueItemEntity2 = catalogueItemJpaRepository.findById("item-id-2").get();
         var catalogueItemEntity3 = catalogueItemJpaRepository.findById("item-id-3").get();
@@ -130,20 +131,26 @@ class CartUseCaseServiceTest {
         cartItemJpaRepository.save(itemEntity2);
         cartItemJpaRepository.save(itemEntity3);
         List<CartItemEntity> itemEntities = new ArrayList<>(List.of(itemEntity2, itemEntity3));
-        cartEntity = new CartEntity(cartId, buyerId, itemEntities);
+        cartEntity = new CartEntity(id, cartId, buyerId, itemEntities);
         cartJpaRepository.save(cartEntity);
 
         // act
+        // 価格更新と限度数更新
+        var catalogItem = catalogueItemJpaRepository.findById(itemEntity2.getItemId()).get();
+        catalogItem.setSalesPrice(3000);
+        catalogItem.setPurchaseLimit(10);
+        catalogueItemJpaRepository.save(catalogItem);
+
         CartItemDto itemDto2 = CartItemDto
                 .builder()
                 .cartId(cartId)
                 .itemId(itemEntity2.getItemId())
                 .itemName(itemEntity2.getItemName())
-                .itemPrice(3000)
+                .itemPrice(200)  // 更新された価格ではなく以前の価格だが、更新時は最新価格となる
                 .itemAmount(2)
                 .itemLimitedCount(10)
                 .build();
-        cartUseCaseService.modifyCartItem(cartId, buyerId, itemDto2);
+        cartUseCaseService.modifyCartItem(cartId, itemDto2);
 
         // assertion
         var resultItem = cartItemJpaRepository.findByCartIdAndItemId(cartId, itemDto2.getItemId()).get();

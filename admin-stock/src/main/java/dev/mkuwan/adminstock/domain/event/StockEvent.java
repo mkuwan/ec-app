@@ -6,23 +6,23 @@ import org.springframework.context.ApplicationEvent;
  * 在庫更新イベント
  */
 public class StockEvent extends ApplicationEvent implements IDomainEvent {
-    private final StockUpdatedEventValue eventValue;
+    private final StockEventValue eventValue;
     private final EventType eventType;
 
 
 
-    public StockEvent(Object source, StockUpdatedEventValue eventValue) {
+    public StockEvent(Object source, StockEventValue eventValue, EventType eventType) {
         super(source);
         this.eventValue = eventValue;
-        this.eventType = EventType.Updated;
+        this.eventType = eventType;
     }
 
 
-    public StockUpdatedEventValue getEventValue() {
+    public StockEventValue EventValue() {
         return eventValue;
     }
 
-    public EventType getEventType() {
+    public EventType EventType() {
         return eventType;
     }
 }

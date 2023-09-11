@@ -5,11 +5,13 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Entity
+@Setter // 本来は必要ありませんが、テスト用につけています
+@Entity(name = "CatalogTable")
 public class CatalogueItemEntity {
     @Id
     private String catalogItemId;

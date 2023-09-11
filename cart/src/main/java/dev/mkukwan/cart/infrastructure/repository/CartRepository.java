@@ -7,8 +7,10 @@ import dev.mkukwan.cart.domain.valueobject.Buyer;
 import dev.mkukwan.cart.domain.valueobject.CartItem;
 import dev.mkukwan.cart.infrastructure.entity.CartEntity;
 import dev.mkukwan.cart.infrastructure.entity.CartItemEntity;
+import dev.mkukwan.cart.infrastructure.entity.CatalogueItemEntity;
 import dev.mkukwan.cart.infrastructure.jpa.CartItemJpaRepository;
 import dev.mkukwan.cart.infrastructure.jpa.CartJpaRepository;
+import dev.mkukwan.cart.infrastructure.jpa.CatalogueItemJpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -19,11 +21,14 @@ import java.util.UUID;
 public class CartRepository implements ICartRepository {
     private final CartJpaRepository cartJpaRepository;
     private final CartItemJpaRepository cartItemJpaRepository;
+    private final CatalogueItemJpaRepository catalogueItemJpaRepository;
 
     public CartRepository(CartJpaRepository cartJpaRepository,
-                          CartItemJpaRepository cartItemJpaRepository) {
+                          CartItemJpaRepository cartItemJpaRepository,
+                          CatalogueItemJpaRepository catalogueItemJpaRepository) {
         this.cartJpaRepository = cartJpaRepository;
         this.cartItemJpaRepository = cartItemJpaRepository;
+        this.catalogueItemJpaRepository = catalogueItemJpaRepository;
     }
 
     @Override
@@ -41,7 +46,7 @@ public class CartRepository implements ICartRepository {
     public CartModel getCartByCartId(String cartId) {
         if(cartId == null)
             return null;
-        var cart = cartJpaRepository.findById(cartId);
+        var cart = cartJpaRepository.findByCartId(cartId);
 
         if(cart.isPresent())
             return fromEntity(cart.get());
@@ -54,13 +59,29 @@ public class CartRepository implements ICartRepository {
         return null;
     }
 
+    @Override
+    public CartItem getItemByItemIdFromCatalog(String itemId) {
+        var itemEntity = catalogueItemJpaRepository.getByCatalogItemId(itemId);
+        return fromCatalogueItemEntityNoCart(itemEntity);
+    }
+
     private CartEntity fromModel(CartModel cartModel){
         List<CartItemEntity> cartItemEntities = new ArrayList<>();
-        cartModel.CartItems().forEach(x -> {
-            cartItemEntities.add(fromItemModel(x));
-        });
-        return new CartEntity(cartModel.CartId(), cartModel.Buyer().buyerId(),
-                cartItemEntities);
+        if(cartModel.CartItems() != null){
+            cartModel.CartItems().forEach(x -> {
+                cartItemEntities.add(fromItemModel(x));
+            });
+        }
+        var entity = cartJpaRepository.findByCartIdAndBuyerId(cartModel.CartId(), cartModel.Buyer().buyerId());
+        if(entity.isPresent()){
+            var existEntity = entity.get();
+            existEntity.setCartItemEntities(cartItemEntities);
+            return existEntity;
+        } else {
+            return new CartEntity(UUID.randomUUID().toString(),
+                    cartModel.CartId(), cartModel.Buyer().buyerId(),
+                    cartItemEntities);
+        }
     }
 
     private CartItemEntity fromItemModel(CartItem cartItem){
@@ -84,9 +105,11 @@ public class CartRepository implements ICartRepository {
         var cartItems = cartEntity.getCartItemEntities();
         List<CartItem> cartItemList = new ArrayList<>();
 
-        cartItems.forEach(x -> {
-            cartItemList.add(fromItemEntity(x));
-        });
+        if(cartItems != null){
+            cartItems.forEach(x -> {
+                cartItemList.add(fromItemEntity(x));
+            });
+        }
 
         return new CartModel(cartEntity.getCartId(),
                 new Buyer(cartEntity.getBuyerId()),
@@ -99,6 +122,15 @@ public class CartRepository implements ICartRepository {
                 cartItemEntity.getItemName(),
                 cartItemEntity.getItemPrice(),
                 cartItemEntity.getItemAmount(),cartItemEntity.getItemLimitedCount());
+    }
+
+    private CartItem fromCatalogueItemEntityNoCart(CatalogueItemEntity catalogueItem){
+        return new CartItem(null,
+                catalogueItem.getCatalogItemId(),
+                catalogueItem.getCatalogItemName(),
+                catalogueItem.getSalesPrice(),
+                catalogueItem.getStockAmount(),
+                catalogueItem.getPurchaseLimit());
     }
 
 }

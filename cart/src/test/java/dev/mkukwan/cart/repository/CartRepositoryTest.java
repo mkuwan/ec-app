@@ -21,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
+@Transactional
 @SpringBootTest
 class CartRepositoryTest {
 
@@ -85,7 +87,7 @@ class CartRepositoryTest {
         // 5	               19	           1900	           item-id-19       	商品19
         // 5	               20	           2000	           item-id-20       	商品20
 
-        cartJpaRepository.save(new CartEntity("testCartId", "testBuyerId",null));
+        cartJpaRepository.save(new CartEntity(UUID.randomUUID().toString(), "testCartId", "testBuyerId",null));
     }
 
     @AfterEach
@@ -95,7 +97,8 @@ class CartRepositoryTest {
             catalogueItemJpaRepository.deleteById(catalogueId);
         }
 
-        cartJpaRepository.deleteById("testCartId");
+        cartJpaRepository.deleteByCartId("testCartId");
+//        cartJpaRepository.deleteAll();
 
         autoCloseable.close();
     }
@@ -114,7 +117,7 @@ class CartRepositoryTest {
     @Test
     void getExistedCartById_Success(){
         // arrange
-        cartJpaRepository.save(new CartEntity("cartId", "buyerId", null));
+        cartJpaRepository.save(new CartEntity(UUID.randomUUID().toString(), "cartId", "buyerId", null));
 
         // act
         var cartModel = cartRepository.getCartByCartId("cartId");
@@ -146,7 +149,8 @@ class CartRepositoryTest {
         cartItemJpaRepository.save(cartItem2);
         catalogueItemEntityList.add(cartItem1);
         catalogueItemEntityList.add(cartItem2);
-        cartJpaRepository.save(new CartEntity("cartHasItemsId", "buyerId", catalogueItemEntityList));
+        cartJpaRepository.save(new CartEntity(UUID.randomUUID().toString(),
+                "cartHasItemsId", "buyerId", catalogueItemEntityList));
 
         // act
         var cartModel = cartRepository.getCartByCartId("cartHasItemsId");
@@ -176,7 +180,7 @@ class CartRepositoryTest {
 
         // act
         var cartModel = cartRepository.getCartByCartId("testCartId");
-        cartModel.putItemIntoCart(new CartItem(UUID.randomUUID().toString(),
+        cartModel.putItemIntoCart(new CartItem(cartModel.CartId(),
                 catalogueItem.getCatalogItemId(), catalogueItem.getCatalogItemName(),
                 catalogueItem.getSalesPrice(), 1, catalogueItem.getPurchaseLimit()));
         cartRepository.save(cartModel);
@@ -194,13 +198,13 @@ class CartRepositoryTest {
     @Test
     void withMockJpaRepositoryTest(){
         // given
-        var cartRepositoryWithMock = new CartRepository(cartJpaRepositoryMock, cartItemJpaRepositoryMock);
+        var cartRepositoryWithMock = new CartRepository(cartJpaRepositoryMock, cartItemJpaRepositoryMock, catalogueItemJpaRepository);
         var catalogueItem = catalogueItemJpaRepository.findById("item-id-1").get();
 
         // when
         var cartModel = new CartModel(UUID.randomUUID().toString(),
                 new Buyer(UUID.randomUUID().toString()), null);
-        cartModel.putItemIntoCart(new CartItem(UUID.randomUUID().toString(),
+        cartModel.putItemIntoCart(new CartItem(cartModel.CartId(),
                 catalogueItem.getCatalogItemId(), catalogueItem.getCatalogItemName(),
                 catalogueItem.getSalesPrice(), 1, catalogueItem.getPurchaseLimit()));
 
@@ -227,13 +231,13 @@ class CartRepositoryTest {
         // arrange
         var item1 = catalogueItemJpaRepository.findById("item-id-11").get();
         var item2 = catalogueItemJpaRepository.findById("item-id-12").get();
-        CartEntity cart = new CartEntity("changeCartId", "buyerId",null);
+        CartEntity cart = new CartEntity(UUID.randomUUID().toString(), "changeCartId", "buyerId",null);
         cartJpaRepository.save(cart);
 
         // act & assertion
         var cartModel = cartRepository.getCartByCartId("changeCartId");
         // one item add to cart
-        cartModel.putItemIntoCart(new CartItem(UUID.randomUUID().toString(),
+        cartModel.putItemIntoCart(new CartItem(cartModel.CartId(),
                 item1.getCatalogItemId(), item1.getCatalogItemName(),
                 item1.getSalesPrice(), 1, item1.getPurchaseLimit()));
         cartRepository.save(cartModel);
@@ -241,7 +245,7 @@ class CartRepositoryTest {
         assertEquals(1, cartModel.CartItems().size());
 
         // second item add to cart
-        cartModel.putItemIntoCart(new CartItem(UUID.randomUUID().toString(),
+        cartModel.putItemIntoCart(new CartItem(cartModel.CartId(),
                 item2.getCatalogItemId(), item2.getCatalogItemName(),
                 item2.getSalesPrice(), 1, item2.getPurchaseLimit()));
         cartRepository.save(cartModel);
@@ -249,7 +253,7 @@ class CartRepositoryTest {
         assertEquals(2, cartModel.CartItems().size());
 
         // remove first item from cart
-        cartModel.modifyItemInCart(new CartItem(UUID.randomUUID().toString(),
+        cartModel.modifyItemInCart(new CartItem(cartModel.CartId(),
                 item1.getCatalogItemId(), item1.getCatalogItemName(),
                 item1.getSalesPrice(), 0, item1.getPurchaseLimit()));
         cartRepository.save(cartModel);
@@ -258,7 +262,7 @@ class CartRepositoryTest {
         assertEquals(item2.getCatalogItemId(), cartModel.CartItems().stream().findFirst().get().itemId());
 
         // add amount second item in cart
-        cartModel.modifyItemInCart(new CartItem(UUID.randomUUID().toString(),
+        cartModel.modifyItemInCart(new CartItem(cartModel.CartId(),
                 item2.getCatalogItemId(), item2.getCatalogItemName(),
                 item2.getSalesPrice(), 3, item2.getPurchaseLimit()));
         cartRepository.save(cartModel);

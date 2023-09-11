@@ -37,7 +37,7 @@ public class CartController {
     public ResponseEntity<CartViewModel> putItem(@RequestBody PutCartItemRequest request){
         try {
             var result = CartViewModel.fromDto(cartUseCaseService
-                    .putItemIntoCart(request.getCartId(), request.getBuyerId(), request.toDto()));
+                    .putItemIntoCart(request.getCartId(), request.toDto()));
 
             return ResponseEntity.ok()
                     .body(result);

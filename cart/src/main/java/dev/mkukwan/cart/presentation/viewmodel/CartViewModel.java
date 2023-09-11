@@ -4,10 +4,12 @@ import dev.mkukwan.cart.usecase.dto.CartDto;
 import dev.mkukwan.cart.usecase.dto.CartItemDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Data
 public class CartViewModel {

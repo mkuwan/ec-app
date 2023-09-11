@@ -11,8 +11,7 @@ import dev.mkuwan.adminstock.domain.valueobject.WareHouse;
 import dev.mkuwan.adminstock.usecase.dto.StockDto;
 import dev.mkuwan.adminstock.usecase.event.StockEventListener;
 import dev.mkuwan.adminstock.usecase.event.StockEventPublisher;
-import dev.mkuwan.adminstock.domain.event.StockUpdatedEventValue;
-import org.hibernate.annotations.NaturalId;
+import dev.mkuwan.adminstock.domain.event.StockEventValue;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,15 +20,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -88,9 +84,8 @@ class StockUsecaseServiceTest {
     void stockEventPublish_listenerGetEventOneTime() {
         // arrange
         var event = new StockEvent(this,
-                new StockUpdatedEventValue(EventType.Updated,
-                        UUID.randomUUID().toString(), "テスト商品",
-                        1000, 2,3, 500, "説明"));
+                new StockEventValue(UUID.randomUUID().toString(), "テスト商品",
+                        1000, 2,3, 500, "説明"), EventType.Updated);
 
         // act
         stockEventPublisher.publishStockEvent(event);
@@ -111,9 +106,8 @@ class StockUsecaseServiceTest {
     void stockEventListenerGetEvent_GetValueClass(){
         // arrange
         var event = new StockEvent(this,
-                new StockUpdatedEventValue(EventType.Updated,
-                        UUID.randomUUID().toString(), "テスト商品2",
-                        100, 2,5, 5000, "説明2"));
+                new StockEventValue(UUID.randomUUID().toString(), "テスト商品2",
+                        100, 2,5, 5000, "説明2"), EventType.Updated);
 
         // act
         stockEventPublisher.publishStockEvent(event);

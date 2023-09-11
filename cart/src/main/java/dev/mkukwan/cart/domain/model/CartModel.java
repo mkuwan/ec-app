@@ -30,12 +30,14 @@ public class CartModel implements IAggregate{
         if(cartItems == null)
             this.cartItems = new ArrayList<>();
         else{
-            List<CartItem> items = new ArrayList<>();
-            cartItems.forEach(x -> {
-                items.add(new CartItem(this.cartId, x.itemId(), x.itemName(),
-                        x.expectedPrice(), x.expectedAmount(), x.itemLimitedCount()));
-            });
-            this.cartItems = items;
+            // 既存と入れ替えしてますが不要かも
+//            List<CartItem> items = new ArrayList<>();
+//            cartItems.forEach(x -> {
+//                items.add(new CartItem(this.cartId, x.itemId(), x.itemName(),
+//                        x.expectedPrice(), x.expectedAmount(), x.itemLimitedCount()));
+//            });
+//            this.cartItems = items;
+            this.cartItems = cartItems;
         }
 
     }
@@ -54,15 +56,15 @@ public class CartModel implements IAggregate{
 
     public void putItemIntoCart(CartItem item){
         // カートに同じ商品があるか確認する
-        var existedItem = cartItems
+        var existedSameItem = cartItems
                 .stream()
                 .filter(x -> x.itemId().equals(item.itemId()))
                 .findFirst().orElse(null);
 
         // カートに同じ商品がある場合は既存のリストデータを削除して新しいもので追加して更新します
         // こうすることで、もし新しい価格で更新されたりした場合に対応できます
-        if(existedItem != null){
-            var amount = existedItem.expectedAmount();
+        if(existedSameItem != null){
+            var amount = existedSameItem.expectedAmount();
             var resultAmount = amount + item.expectedAmount();
 
             // 購入可能限度数を超えてカートに入れることはできない
@@ -71,7 +73,7 @@ public class CartModel implements IAggregate{
                 throw new IllegalArgumentException(message);
             }
 
-            cartItems.remove(existedItem);
+            cartItems.remove(existedSameItem);
             cartItems.add(new CartItem(
                     item.cartId(),
                     item.itemId(),
