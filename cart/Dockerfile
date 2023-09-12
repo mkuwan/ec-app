@@ -3,8 +3,8 @@
 #   ビルドで --server.port=80とすれば指定できます(application.ymlの設定値を上書きする)
 #   なしの場合はapplication.ymlのポートが使用されます
 
-# docker build ./ -t sample
-# docker run -d -p 3000:80 --name cart -it sample
+# docker build ./ -t cart
+# docker run -d -p 3000:80 --name cart -it cart
 
 FROM gradle:jdk17 AS build
 ENV APP_HOME=/usr/app/

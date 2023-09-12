@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @Transactional
@@ -280,6 +279,44 @@ class CartRepositoryTest {
         assertEquals(3, inCartItem.expectedAmount());
 
 
+    }
+
+    @Test
+    void clearCart_Success(){
+        // arrange
+        var cartId = "clearCartId";
+        List<CartItemEntity> catalogueItemEntityList = new ArrayList<>();
+        var item20 = catalogueItemJpaRepository.findById("item-id-20").get();
+        var item21 = catalogueItemJpaRepository.findById("item-id-21").get();
+        var item20Id = UUID.randomUUID().toString();
+        CartItemEntity cartItem1 = new CartItemEntity(item20Id,
+                cartId,
+                item20.getCatalogItemId(),
+                item20.getCatalogItemName(), item20.getSalesPrice(),
+                1, item20.getPurchaseLimit());
+        CartItemEntity cartItem2 = new CartItemEntity(UUID.randomUUID().toString(),
+                cartId,
+                item21.getCatalogItemId(),
+                item21.getCatalogItemName(), item21.getSalesPrice(),
+                3, item21.getPurchaseLimit());
+        cartItemJpaRepository.save(cartItem1);
+        cartItemJpaRepository.save(cartItem2);
+        catalogueItemEntityList.add(cartItem1);
+        catalogueItemEntityList.add(cartItem2);
+        cartJpaRepository.save(new CartEntity(UUID.randomUUID().toString(),
+                cartId, "buyerId", catalogueItemEntityList));
+
+        // act
+        var cartModel= cartRepository.getCartByCartId(cartId);
+        cartModel.clearCart();
+        cartRepository.clearCartAndSave(cartModel);
+
+        // assertion
+        var checkItem = cartItemJpaRepository.findById(item20Id);
+        assertFalse(checkItem.isPresent());
+
+        var checkCart = cartJpaRepository.findByCartId(cartId);
+        assertEquals(0, checkCart.get().getCartItemEntities().size());
     }
 
 }

@@ -34,12 +34,28 @@ public class CartRepository implements ICartRepository {
     @Override
     public void save(IAggregate cartModel) {
         var saveCartModel = (CartModel)cartModel;
-        saveCartModel.CartItems().forEach(x -> {
-            var item = fromItemModel(x);
-            cartItemJpaRepository.save(item);
-        });
+
+        if(saveCartModel.CartItems() != null && saveCartModel.CartItems().size() > 0){
+            saveCartModel.CartItems().forEach(x -> {
+                var item = fromItemModel(x);
+                cartItemJpaRepository.save(item);
+            });
+        }
 
         cartJpaRepository.save(fromModel(saveCartModel));
+    }
+
+    @Override
+    public void clearCartAndSave(IAggregate cartModel) {
+        var saveCartModel = (CartModel)cartModel;
+        var cartId = saveCartModel.CartId();
+
+        var items = cartItemJpaRepository.findAllByCartId(cartId);
+        if(items.isPresent()){
+            items.get().forEach(cartItemJpaRepository::delete);
+        }
+
+        save(cartModel);
     }
 
     @Override

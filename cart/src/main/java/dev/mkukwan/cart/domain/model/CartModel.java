@@ -125,4 +125,8 @@ public class CartModel implements IAggregate{
         else
             System.out.println("商品数が0のためカートから削除します");
     }
+
+    public void clearCart(){
+        cartItems.clear();
+    }
 }

@@ -2,28 +2,21 @@ server:
   port: 8180
 
 spring:
-  #  in use H2
   datasource:
-    url: jdbc:h2:mem:sample_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    username: root
+    password: mariapassword
+    url: jdbc:mariadb://localhost:13307/cartdb
+    driver-class-name: org.mariadb.jdbc.Driver
   sql:
     init:
       encoding: utf-8
       mode: always
   jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: create-drop
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.MariaDB106Dialect
+        format_sql: true
         enable_lazy_load_no_trans: true
-    database-platform: org.hibernate.dialect.H2Dialect
-  h2:
-    console:
-      enabled: true
-      settings:
-        trace: true
-        web-allow-others: true
-      path: /h2-console
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
