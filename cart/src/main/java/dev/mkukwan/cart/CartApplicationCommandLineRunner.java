@@ -34,31 +34,35 @@ public class CartApplicationCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // サンプルデータ作成
-        for (int i = 0; i < 100; i++) {
-            CatalogueItemEntity catalogueItem = new CatalogueItemEntity("item-id-" + (i + 1),
-                    "商品" + (i + 1), 100 * (i + 1), i + 1, 5);
-            catalogueItemJpaRepository.save(catalogueItem);
+        try {
+            for (int i = 0; i < 100; i++) {
+                CatalogueItemEntity catalogueItem = new CatalogueItemEntity("item-id-" + (i + 1),
+                        "商品" + (i + 1), 100 * (i + 1), i + 1, 5);
+                catalogueItemJpaRepository.save(catalogueItem);
+            }
+
+            cartJpaRepository.save(new CartEntity(UUID.randomUUID().toString(), "sampleCartAId", "sampleUserA",null));
+            cartJpaRepository.save(new CartEntity(UUID.randomUUID().toString(), "sampleCartBId", "sampleUserB",null));
+
+            var catalogueItem10 = catalogueItemJpaRepository.findById("item-id-10").get();
+            var catalogueItem11 = catalogueItemJpaRepository.findById("item-id-12").get();
+            var cartModelA = cartRepository.getCartByCartId("sampleCartAId");
+            cartModelA.putItemIntoCart(new CartItem(cartModelA.CartId(),
+                    catalogueItem10.getCatalogItemId(), catalogueItem10.getCatalogItemName(),
+                    catalogueItem10.getSalesPrice(), 1, catalogueItem10.getPurchaseLimit()));
+            cartModelA.putItemIntoCart(new CartItem(cartModelA.CartId(),
+                    catalogueItem11.getCatalogItemId(), catalogueItem11.getCatalogItemName(),
+                    catalogueItem11.getSalesPrice(), 2, catalogueItem11.getPurchaseLimit()));
+            cartRepository.save(cartModelA);
+
+            var catalogueItem21 = catalogueItemJpaRepository.findById("item-id-21").get();
+            var cartModelB = cartRepository.getCartByCartId("sampleCartBId");
+            cartModelB.putItemIntoCart(new CartItem(cartModelB.CartId(),
+                    catalogueItem21.getCatalogItemId(), catalogueItem21.getCatalogItemName(),
+                    catalogueItem21.getSalesPrice(), 4, catalogueItem21.getPurchaseLimit()));
+            cartRepository.save(cartModelB);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
-
-        cartJpaRepository.save(new CartEntity(UUID.randomUUID().toString(), "sampleCartAId", "sampleUserA",null));
-        cartJpaRepository.save(new CartEntity(UUID.randomUUID().toString(), "sampleCartBId", "sampleUserB",null));
-
-        var catalogueItem10 = catalogueItemJpaRepository.findById("item-id-10").get();
-        var catalogueItem11 = catalogueItemJpaRepository.findById("item-id-12").get();
-        var cartModelA = cartRepository.getCartByCartId("sampleCartAId");
-        cartModelA.putItemIntoCart(new CartItem(cartModelA.CartId(),
-                catalogueItem10.getCatalogItemId(), catalogueItem10.getCatalogItemName(),
-                catalogueItem10.getSalesPrice(), 1, catalogueItem10.getPurchaseLimit()));
-        cartModelA.putItemIntoCart(new CartItem(cartModelA.CartId(),
-                catalogueItem11.getCatalogItemId(), catalogueItem11.getCatalogItemName(),
-                catalogueItem11.getSalesPrice(), 2, catalogueItem11.getPurchaseLimit()));
-        cartRepository.save(cartModelA);
-
-        var catalogueItem21 = catalogueItemJpaRepository.findById("item-id-21").get();
-        var cartModelB = cartRepository.getCartByCartId("sampleCartBId");
-        cartModelB.putItemIntoCart(new CartItem(cartModelB.CartId(),
-                catalogueItem21.getCatalogItemId(), catalogueItem21.getCatalogItemName(),
-                catalogueItem21.getSalesPrice(), 4, catalogueItem21.getPurchaseLimit()));
-        cartRepository.save(cartModelB);
     }
 }

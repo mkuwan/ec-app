@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-09-12T10:50:24.106Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="uls6dIfEH26FQUWuPpBo" version="21.6.8" type="device" pages="13">
+<mxfile host="Electron" modified="2023-09-13T11:31:07.386Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="_4dLIkagq1VQBRrWbcMO" version="21.6.8" type="device" pages="13">
   <diagram id="cMnE_LYomMNR2ONjdC-j" name="基本概念">
     <mxGraphModel dx="1098" dy="1175" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -1155,8 +1155,8 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="uvK4UhCQ5uDc-ky8E2kR" name="在庫管理設計">
-    <mxGraphModel dx="1098" dy="6964" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+  <diagram id="uvK4UhCQ5uDc-ky8E2kR" name="在庫・カタログ管理設計">
+    <mxGraphModel dx="1596" dy="6964" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -2021,6 +2021,9 @@
         <mxCell id="XT2jWhD-oyhag_U8GoN1-2" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="XT2jWhD-oyhag_U8GoN1-3" target="XT2jWhD-oyhag_U8GoN1-16" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="YzMOrhD__4Ve5mgAHIMm-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="XT2jWhD-oyhag_U8GoN1-3" target="YzMOrhD__4Ve5mgAHIMm-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="XT2jWhD-oyhag_U8GoN1-3" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;A社&lt;br style=&quot;font-size: 16px;&quot;&gt;(カタログ部門)&lt;br style=&quot;font-size: 16px;&quot;&gt;&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=16;" parent="1" vertex="1">
           <mxGeometry x="770" y="-4030" width="30" height="60" as="geometry" />
         </mxCell>
@@ -2033,18 +2036,18 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="XT2jWhD-oyhag_U8GoN1-6" value="在庫" style="rounded=0;whiteSpace=wrap;html=1;fontSize=18;" parent="1" vertex="1">
-          <mxGeometry x="305.5" y="-3951" width="95" height="40" as="geometry" />
+          <mxGeometry x="246.12" y="-3860" width="210" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="XT2jWhD-oyhag_U8GoN1-9" value="&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;ドメインエキスパートと確認した事項&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;Q : 在庫・カタログについて&lt;/font&gt;&lt;br&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;ここで使用する在庫は、在庫発注で補充されますか？&lt;br&gt;　はい、在庫発注→納品→在庫補充となります&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;画面に表示される販売数は在庫数ですか？それとも購入限度数ですか？&lt;br&gt;　購入限度数が表示されます&lt;br&gt;　在庫のほうが少ない場合は在庫数です&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;在庫・カタログの新規追加や変更・調整はどのように行いますか？&lt;br&gt;またその際のルールはありますか？&lt;br&gt;　管理用画面があり、以下の処理を行います&lt;br&gt;　在庫商品管理&lt;br&gt;　　新規処理 : 商品の新規追加&lt;br&gt;　　変更処理 : 商品の名前の変更・在庫数・仕入れ価格&lt;br&gt;　　削除処理 : 商品の削除&lt;br&gt;　ルールとしては以下のものがあります&lt;br&gt;　　新規・変更 : 販売用商品名は20文字以内(40byte)、価格は平均仕入れ価格の1.5倍以上3倍以内&lt;br&gt;　　　　　　　　購入限度数は1以上5以下&lt;br&gt;　カタログでは&lt;br&gt;　　新規 : 表示用商品名・販売価格・購入限度数の登録&lt;br&gt;　　変更 : 表示用&lt;span style=&quot;font-size: 16px;&quot;&gt;商品名・販売価格・購入限度数&lt;/span&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;&lt;br&gt;　　削除 : 過去に販売実績のあるものは削除できません&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;商品名は変わることがありますか？また仕入れ価格が変動することはありますか？&lt;br&gt;　はい、商品名も仕入れ価格も変わることがあります&lt;br&gt;　商品名が変わってもカタログとして表示する名前は販売用商品名を使用します&lt;br&gt;　販売価格は平均仕入れ価格(小数点以下は四捨五入)の1.5倍から3倍以内ということになります&lt;br&gt;　平均仕入れ価格の計算は在庫のある商品から行います&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;在庫調整等はありますか？&lt;br&gt;　はい、仕入れ処理ミス、検品による不良品による在庫追加・削除があります&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;在庫調整したで商品数を変更(追加・変更・削除)した場合、仕入れとの差異はどのように処理しますか&lt;br&gt;　商品数の調整は棚卸しで実在庫と差異があった場合の処理となります。&lt;br&gt;　棚卸しは仕入れからの在庫量と実在庫との比較で行われます。&lt;br&gt;　この在庫処理での調整は、棚卸し処理後の差異を調整するためのものですので仕入れとの調整は不要です。&lt;br&gt;　　→つまり在庫ドメインよりも仕入れ・納品・検品ドメイン領域の責務と本来はなるということ&lt;br&gt;　仕入れ後の商品管理に起因する場合(破損・紛失・発見等)も仕入れ後のものですので仕入れとの調整は不要です。&lt;br&gt;　この場合は削除分の仕入れ価格を損金として計上し、追加の場合は復活在庫として仕入れ価格は平均仕入れ価格を四捨五入して計上します&lt;br&gt;　在庫数は仕入れ処理での仕入れ数が元になりますので発注との差異は処理不要です。&lt;br&gt;　帳簿上在庫＝期首在庫 + 仕入れ数 - 売上数&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;カタログ表示で在庫のない商品は表示しますか？&lt;br&gt;　発注・納品予定のない商品は表示しないでください&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;新規の商品情報を登録することはできますか？&lt;br&gt;　商品情報の登録をして、商品は発注・納品されることで登録されます&lt;/span&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=15;" parent="1" vertex="1">
+        <mxCell id="XT2jWhD-oyhag_U8GoN1-9" value="&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;ドメインエキスパートと確認した事項&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;Q : 在庫・カタログについて&lt;/font&gt;&lt;br&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;ここで使用する在庫は、在庫発注で補充されますか？&lt;br&gt;　はい、在庫発注→納品→在庫補充となります&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;画面に表示される販売数は在庫数ですか？それとも購入限度数ですか？&lt;br&gt;　購入限度数が表示されます&lt;br&gt;　在庫のほうが少ない場合は在庫数です&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;在庫・カタログの新規追加や変更・調整はどのように行いますか？&lt;br&gt;またその際のルールはありますか？&lt;br&gt;　管理用画面があり、以下の処理を行います&lt;br&gt;　在庫商品管理&lt;br&gt;　　変更処理 : 在庫数 (棚卸しによる変更[増減]、入荷処理による変更[増のみ]があります)&lt;br&gt;　カタログでは&lt;br&gt;　　新規 : 表示用商品名・販売価格・購入限度数の登録 (登録後に発注を行います)&lt;br&gt;　　変更 : 表示用&lt;span style=&quot;font-size: 16px;&quot;&gt;商品名・販売価格・購入限度数の変更&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;　　削除 : 過去に販売実績のあるものは削除できません&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;　ルールとしては以下のものがあります&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 16px;&quot;&gt;　　新規・変更 : 販売用商品名は20文字以内(40byte)、価格は平均仕入れ価格の1.5倍以上3倍以内&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 16px;&quot;&gt;　　　　　　　　購入限度数は1以上5以下&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;商品名は変わることがありますか？また仕入れ価格が変動することはありますか？&lt;br&gt;　はい、商品名も仕入れ価格も変わることがあります&lt;br&gt;　商品名が変わってもカタログとして表示する名前は販売用商品名を使用します&lt;br&gt;　販売価格は平均仕入れ価格(小数点以下は四捨五入)の1.5倍から3倍以内ということになります&lt;br&gt;　平均仕入れ価格の計算は在庫のある商品から行います&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;在庫調整等はありますか？&lt;br&gt;　はい、仕入れ処理ミス、検品や棚卸しによる不良品・欠品発生を理由とした在庫追加・削除があります&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;在庫調整した商品数を変更(追加・変更・削除)した場合、仕入れとの差異はどのように処理しますか&lt;br&gt;　商品数の調整は検品や棚卸しで実在庫と差異があった場合の処理となります。&lt;br&gt;　棚卸しは仕入れからの在庫量と実在庫との比較で行われます。&lt;br&gt;　この在庫処理での調整は、棚卸し処理後の差異を調整するためのものです&lt;br&gt;　仕入れ後の商品管理に起因する場合(破損・紛失・発見等)も仕入れ後のものですので棚卸しで行います。&lt;br&gt;　棚卸しでは削除分の仕入れ価格を損金として計上し、追加の場合は復活在庫として仕入れ価格は平均仕入れ価格を四捨五入して計上します&lt;br&gt;　帳簿上在庫＝期首在庫 + 仕入れ数 - 売上数&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;カタログ表示で在庫のない商品は表示しますか？&lt;br&gt;　発注・納品予定のない商品は表示しないでください&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;新規の商品情報を登録することはできますか？&lt;br&gt;　商品情報の登録をして、商品は発注・納品されることで登録されます&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;商品が保管される倉庫は複数ありますか？&lt;br&gt;　はい、倉庫ごとに管理しています&lt;br&gt;　表示としては総計で在庫数を出し、詳細や倉庫別でも表示できようにしてほしいです&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 1.5;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;発注して未入荷状態の商品は在庫0の商品となります？&lt;br&gt;　はい、在庫は入荷されてから発生しますので、それまでは在庫は0となります&lt;/span&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=15;" parent="1" vertex="1">
           <mxGeometry x="40" y="-5760" width="1050" height="1230" as="geometry" />
         </mxCell>
         <mxCell id="XT2jWhD-oyhag_U8GoN1-10" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;商品を画面に表示する&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fontSize=22;strokeColor=default;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="237.75" y="-3662" width="230.5" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="XT2jWhD-oyhag_U8GoN1-11" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=22;startArrow=none;startFill=0;endArrow=classic;endFill=1;strokeWidth=1;" parent="1" source="XT2jWhD-oyhag_U8GoN1-12" target="XT2jWhD-oyhag_U8GoN1-14" edge="1">
+        <mxCell id="XT2jWhD-oyhag_U8GoN1-11" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.3333333333333333;entryDx=0;entryDy=0;fontSize=22;startArrow=none;startFill=0;endArrow=classic;endFill=1;strokeWidth=1;entryPerimeter=0;" parent="1" source="XT2jWhD-oyhag_U8GoN1-12" target="YzMOrhD__4Ve5mgAHIMm-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="XT2jWhD-oyhag_U8GoN1-12" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;発注&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fontSize=22;strokeColor=default;fillColor=none;" parent="1" vertex="1">
+        <mxCell id="XT2jWhD-oyhag_U8GoN1-12" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;自動発注&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fontSize=22;strokeColor=default;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="540" y="-4490" width="85" height="50" as="geometry" />
         </mxCell>
         <mxCell id="XT2jWhD-oyhag_U8GoN1-13" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=22;startArrow=none;startFill=0;endArrow=classic;endFill=1;strokeWidth=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="XT2jWhD-oyhag_U8GoN1-14" target="qoCKRTTKBG6-C6mkRRqR-11" edge="1">
@@ -2055,13 +2058,14 @@
         <mxCell id="XT2jWhD-oyhag_U8GoN1-14" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;納品&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fontSize=22;strokeColor=default;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="540.5" y="-4380" width="85" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="XT2jWhD-oyhag_U8GoN1-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="XT2jWhD-oyhag_U8GoN1-16" target="XT2jWhD-oyhag_U8GoN1-6" edge="1">
+        <mxCell id="XT2jWhD-oyhag_U8GoN1-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="XT2jWhD-oyhag_U8GoN1-16" target="XT2jWhD-oyhag_U8GoN1-6" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="565.5" y="-4040" as="sourcePoint" />
+            <mxPoint x="450" y="-3900" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="XT2jWhD-oyhag_U8GoN1-16" value="&lt;span style=&quot;font-size: 16px;&quot;&gt;商品設定・追加・変更&lt;br style=&quot;font-size: 16px;&quot;&gt;・削除&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fontSize=16;strokeColor=default;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="467.25" y="-4040" width="230.5" height="80" as="geometry" />
+          <mxGeometry x="510" y="-4040" width="187.75" height="80" as="geometry" />
         </mxCell>
         <mxCell id="XT2jWhD-oyhag_U8GoN1-19" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;endArrow=none;endFill=0;" parent="1" source="XT2jWhD-oyhag_U8GoN1-20" target="XT2jWhD-oyhag_U8GoN1-16" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -2081,23 +2085,24 @@
         <mxCell id="XT2jWhD-oyhag_U8GoN1-24" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;お客&lt;br&gt;&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=24;" parent="1" vertex="1">
           <mxGeometry x="90" y="-3652" width="30" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="XT2jWhD-oyhag_U8GoN1-27" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;" parent="1" vertex="1">
-          <mxGeometry x="640" y="-4460" width="20" height="100" as="geometry" />
-        </mxCell>
         <mxCell id="a48hEbGQPmTiwrCpL8xR-2" value="ユースケース図" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;" parent="1" vertex="1">
           <mxGeometry x="40" y="-4510" width="540" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="qoCKRTTKBG6-C6mkRRqR-7" value="Jobもしくはマニュアル" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="660.5" y="-4365" width="130" height="30" as="geometry" />
         </mxCell>
         <mxCell id="qoCKRTTKBG6-C6mkRRqR-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="qoCKRTTKBG6-C6mkRRqR-9" target="qoCKRTTKBG6-C6mkRRqR-11" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="qoCKRTTKBG6-C6mkRRqR-9" value="A社&lt;br&gt;(在庫部門)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
-          <mxGeometry x="720" y="-4260" width="30" height="60" as="geometry" />
+          <mxGeometry x="760" y="-4260" width="30" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="qoCKRTTKBG6-C6mkRRqR-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="qoCKRTTKBG6-C6mkRRqR-11" target="XT2jWhD-oyhag_U8GoN1-16" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="qoCKRTTKBG6-C6mkRRqR-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="qoCKRTTKBG6-C6mkRRqR-11" target="XT2jWhD-oyhag_U8GoN1-6" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="583" y="-4110" />
+              <mxPoint x="470" y="-4110" />
+              <mxPoint x="470" y="-3940" />
+              <mxPoint x="351" y="-3940" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="qoCKRTTKBG6-C6mkRRqR-11" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;検品&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fontSize=22;strokeColor=default;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="540" y="-4255" width="85" height="50" as="geometry" />
@@ -2105,14 +2110,14 @@
         <mxCell id="qoCKRTTKBG6-C6mkRRqR-20" value="ドメインモデル" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;" parent="1" vertex="1">
           <mxGeometry x="40" y="-3280" width="540" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="D1yajEdg2UtfUFJ_1CIG-3" value="在庫管理(Stock)" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=22;" parent="1" vertex="1">
-          <mxGeometry x="60.00141141141142" y="-3230.0010101010103" width="180" height="40" as="geometry" />
+        <mxCell id="D1yajEdg2UtfUFJ_1CIG-3" value="在庫・カタログ管理(Stock)" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=22;" parent="1" vertex="1">
+          <mxGeometry x="60.00141141141142" y="-3230.0010101010103" width="290" height="40" as="geometry" />
         </mxCell>
         <mxCell id="qoCKRTTKBG6-C6mkRRqR-46" value="DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=7;" parent="1" vertex="1">
-          <mxGeometry x="280" y="-4000" width="60" height="50" as="geometry" />
+          <mxGeometry x="230" y="-3850" width="60" height="50" as="geometry" />
         </mxCell>
         <mxCell id="yaqPz2ZAHCsTipB_QOgt-25" value="今後検討の余地があるもの&lt;br&gt;・在庫の移動(倉庫間の移動)&lt;br&gt;・納品ドメイン&lt;br&gt;・検品ドメイン" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fontColor=#000000;darkOpacity=0.05;fillColor=#FFF9B2;strokeColor=none;fillStyle=solid;direction=west;gradientDirection=north;gradientColor=#FFF2A1;shadow=1;size=20;pointerEvents=1;align=left;spacingLeft=0;spacingRight=0;spacing=10;" parent="1" vertex="1">
-          <mxGeometry x="95.5" y="-4385" width="210" height="130" as="geometry" />
+          <mxGeometry x="690" y="-4690" width="210" height="130" as="geometry" />
         </mxCell>
         <mxCell id="i2CL4omoUpqo6HcQRqPC-5" value="WareHouse: record" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontSize=12;strokeColor=#7EA6E0;strokeWidth=2;fillColor=default;" parent="1" vertex="1">
           <mxGeometry x="660" y="-640" width="200" height="78" as="geometry" />
@@ -2310,19 +2315,13 @@
           <mxGeometry y="294" width="200" height="26" as="geometry" />
         </mxCell>
         <mxCell id="_tfTaVXaXuQYbr8WE8e5-1" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;棚卸し&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fontSize=22;strokeColor=default;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="430" y="-4255" width="85" height="50" as="geometry" />
+          <mxGeometry x="307.94" y="-4310" width="85" height="50" as="geometry" />
         </mxCell>
         <mxCell id="_tfTaVXaXuQYbr8WE8e5-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="_tfTaVXaXuQYbr8WE8e5-2" target="_tfTaVXaXuQYbr8WE8e5-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="_tfTaVXaXuQYbr8WE8e5-2" value="A社&lt;br&gt;(在庫部門)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
-          <mxGeometry x="330" y="-4260" width="30" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="_tfTaVXaXuQYbr8WE8e5-4" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="_tfTaVXaXuQYbr8WE8e5-1" target="XT2jWhD-oyhag_U8GoN1-16" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="593" y="-4195" as="sourcePoint" />
-            <mxPoint x="593" y="-4030" as="targetPoint" />
-          </mxGeometry>
+          <mxGeometry x="180" y="-4315" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="_tfTaVXaXuQYbr8WE8e5-5" value="販売用商品名で表示&lt;br&gt;販売用商品名は20文字以内" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
           <mxGeometry x="740" y="-3770" width="200" height="50" as="geometry" />
@@ -2335,6 +2334,42 @@
         </mxCell>
         <mxCell id="_tfTaVXaXuQYbr8WE8e5-11" value="«DomainEventHandler»&lt;br&gt;&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;b&gt;DomainEventの永続化実装&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;" style="html=1;fontSize=12;strokeColor=#7EA6E0;strokeWidth=2;fillColor=default;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="460" y="-1520" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YzMOrhD__4Ve5mgAHIMm-3" value="仕入元" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="760" y="-4450" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YzMOrhD__4Ve5mgAHIMm-5" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=22;startArrow=none;startFill=0;endArrow=classic;endFill=1;strokeWidth=1;exitX=0;exitY=0.333;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="YzMOrhD__4Ve5mgAHIMm-3" target="XT2jWhD-oyhag_U8GoN1-14">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="554" y="-4444" as="sourcePoint" />
+            <mxPoint x="465" y="-4420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YzMOrhD__4Ve5mgAHIMm-7" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=22;startArrow=none;startFill=0;endArrow=classic;endFill=1;strokeWidth=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="qoCKRTTKBG6-C6mkRRqR-11" target="YzMOrhD__4Ve5mgAHIMm-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="770" y="-4420" as="sourcePoint" />
+            <mxPoint x="760" y="-4430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YzMOrhD__4Ve5mgAHIMm-8" value="返品・欠品" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="670" y="-4320" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="YzMOrhD__4Ve5mgAHIMm-9" value="実入荷数" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="585" y="-4165" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="YzMOrhD__4Ve5mgAHIMm-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="_tfTaVXaXuQYbr8WE8e5-1" target="XT2jWhD-oyhag_U8GoN1-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="350.44000000000005" y="-4125" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YzMOrhD__4Ve5mgAHIMm-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.3333333333333333;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="YzMOrhD__4Ve5mgAHIMm-15" target="YzMOrhD__4Ve5mgAHIMm-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="962" y="-4430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YzMOrhD__4Ve5mgAHIMm-15" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;発注&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fontSize=22;strokeColor=default;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="919.75" y="-4025" width="85" height="50" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
@@ -2746,7 +2781,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="＊カート機能設計(誰でも)" id="SD1Si8Ip-qQFhNXS6QBH">
-    <mxGraphModel dx="1098" dy="4682" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1596" dy="4682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="vlHc9PdUAqYkRJqdDarg-0" />
         <mxCell id="vlHc9PdUAqYkRJqdDarg-1" parent="vlHc9PdUAqYkRJqdDarg-0" />
@@ -2757,15 +2792,15 @@
           <mxGeometry x="65" y="1900" width="1235" height="500" as="geometry" />
         </mxCell>
         <mxCell id="Fyxjkk9KvwoaG2kreaJi-2" value="CartModel" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontSize=12;strokeColor=#7EA6E0;strokeWidth=2;fillColor=default;" parent="vlHc9PdUAqYkRJqdDarg-1" vertex="1">
-          <mxGeometry x="295" y="2000" width="270" height="242" as="geometry" />
+          <mxGeometry x="295" y="2000" width="270" height="294" as="geometry" />
         </mxCell>
-        <mxCell id="Fyxjkk9KvwoaG2kreaJi-3" value="+ CartId: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
+        <mxCell id="Fyxjkk9KvwoaG2kreaJi-3" value="− cartId: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
           <mxGeometry y="26" width="270" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="Fyxjkk9KvwoaG2kreaJi-4" value="+ BuyerId" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
+        <mxCell id="Fyxjkk9KvwoaG2kreaJi-4" value="− buyerId" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
           <mxGeometry y="52" width="270" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="Fyxjkk9KvwoaG2kreaJi-5" value="+ CartItems: List&lt;CartItem&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
+        <mxCell id="Fyxjkk9KvwoaG2kreaJi-5" value="− cartItems: List&lt;CartItem&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
           <mxGeometry y="78" width="270" height="26" as="geometry" />
         </mxCell>
         <mxCell id="Fyxjkk9KvwoaG2kreaJi-6" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
@@ -2774,17 +2809,23 @@
         <mxCell id="Fyxjkk9KvwoaG2kreaJi-7" value="+ constructor(full)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
           <mxGeometry y="112" width="270" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="Fyxjkk9KvwoaG2kreaJi-8" value="+ getter methods" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
+        <mxCell id="Fyxjkk9KvwoaG2kreaJi-9" value="+ putItemIntoCart(CatalogItem): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
           <mxGeometry y="138" width="270" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="Fyxjkk9KvwoaG2kreaJi-9" value="+ putItemIntoCart(CatalogItem): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
+        <mxCell id="Fyxjkk9KvwoaG2kreaJi-10" value="+ modifyItemInCart(CatalogItem): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
           <mxGeometry y="164" width="270" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="Fyxjkk9KvwoaG2kreaJi-10" value="+ modifyItemInCart(CatalogItem): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
+        <mxCell id="Fyxjkk9KvwoaG2kreaJi-11" value="+ clearCart(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
           <mxGeometry y="190" width="270" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="Fyxjkk9KvwoaG2kreaJi-11" value="+ clearCart(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="Fyxjkk9KvwoaG2kreaJi-2" vertex="1">
+        <mxCell id="GnMPa31uOcZnIhNuuElh-0" value="+ CartId: String (getter cartId)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" vertex="1" parent="Fyxjkk9KvwoaG2kreaJi-2">
           <mxGeometry y="216" width="270" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="GnMPa31uOcZnIhNuuElh-1" value="+ BuyerId: String (getter buyerId)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" vertex="1" parent="Fyxjkk9KvwoaG2kreaJi-2">
+          <mxGeometry y="242" width="270" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="GnMPa31uOcZnIhNuuElh-2" value="+ CartItems: List&lt;CartItem&gt; (getter cartItems)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" vertex="1" parent="Fyxjkk9KvwoaG2kreaJi-2">
+          <mxGeometry y="268" width="270" height="26" as="geometry" />
         </mxCell>
         <mxCell id="Fyxjkk9KvwoaG2kreaJi-12" value="CartItems: record" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontSize=12;strokeColor=#7EA6E0;strokeWidth=2;fillColor=default;" parent="vlHc9PdUAqYkRJqdDarg-1" vertex="1">
           <mxGeometry x="645" y="2192" width="190" height="182" as="geometry" />
@@ -3348,8 +3389,8 @@
         <mxCell id="Fyxjkk9KvwoaG2kreaJi-200" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;ユースケースとは業務におけるフローを表したもの&lt;br&gt;各イベントがどのような流れで行われるかというものということです&lt;br&gt;&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="vlHc9PdUAqYkRJqdDarg-1" vertex="1">
           <mxGeometry x="90.00000000000003" y="-1400" width="520" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="Fyxjkk9KvwoaG2kreaJi-201" value="コンストラクタ&lt;br&gt;　カートを作成した時にカートId, 購入者Id, 商品を割り当てますが、&lt;br&gt;　カートIdがnullの場合は新しくIdを割り当てる&lt;br&gt;　購入者Idがnullの場合は新しくIdを割り当てる&lt;br&gt;　カート内商品がnullの場合は新しくArrayListを割り当てる　　ようにする。&lt;br&gt;&lt;br&gt;putItemIntoCart(CatalogItem): void&lt;br style=&quot;font-size: 14px;&quot;&gt;　カタログ商品をカートに追加するメソッド&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;　カートに入れた商品がすでにカート内にある場合&lt;br style=&quot;font-size: 14px;&quot;&gt;　　商品の購入希望数に追加する&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;　カートに入れた商品がすでにカート内にあり、価格が異なる場合&lt;br style=&quot;font-size: 14px;&quot;&gt;　　すでにカートに入っている商品を新しく入れた商品の価格に統一する&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　カートの中のカタログ商品の種類の数が10を超えたらエラーとする&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　IllegalArgumentException&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　メッセージ:&amp;nbsp;カートには10商品を超えて入れることはできません&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　カタログ商品で設定されている購入限度数を超えて同じ商品をカートに入れた&lt;br&gt;場合はエラーとする&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　IllegalArgumentException&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　メッセージ:&amp;nbsp;購入限度数%sを超えてカートに入れることはできません&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　　　　%s := カタログ商品の購入限度数 (int)&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;modifyItemInCart(CatalogItem): void&lt;br style=&quot;font-size: 14px;&quot;&gt;　カート画面でカタログ商品の商品数を変更する&lt;br style=&quot;font-size: 14px;&quot;&gt;　&lt;br&gt;　カタログデータから商品情報を取得して、最新データで変更登録する&lt;br&gt;　(カートに入れた後で限度数等が変更となっている可能性があるため)&lt;br style=&quot;font-size: 14px;&quot;&gt;　カタログ商品で設定されている購入限度数を超えて増やした場合はエラーとする&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　IllegalArgumentException&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　メッセージ:&amp;nbsp;購入限度数%sを超えてカートに入れることはできません&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　　　　%s := カタログ商品の購入限度数 (int)&lt;br style=&quot;font-size: 14px;&quot;&gt;　購入希望数が0の場合はカートから削除する&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;clearCart(): void&lt;br style=&quot;font-size: 14px;&quot;&gt;　カートの中身を全て削除する" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;" parent="vlHc9PdUAqYkRJqdDarg-1" vertex="1">
-          <mxGeometry x="74" y="2438" width="534" height="684" as="geometry" />
+        <mxCell id="Fyxjkk9KvwoaG2kreaJi-201" value="&lt;b&gt;コンストラクタ&lt;br&gt;&lt;/b&gt;　カートを作成した時にカートId, 購入者Id, 商品を割り当てますが、&lt;br&gt;　カートIdがnullの場合は新しくIdを割り当てる&lt;br&gt;　購入者Idがnullの場合は新しくIdを割り当てる&lt;br&gt;　カート内商品がnullの場合は新しくArrayListを割り当てる　　ようにする。&lt;br&gt;&lt;br&gt;&lt;b&gt;putItemIntoCart(CatalogItem): void&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;/b&gt;　カタログ商品をカートに追加するメソッド&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;　カートに入れた商品がすでにカート内にある場合&lt;br style=&quot;font-size: 14px;&quot;&gt;　　商品の購入希望数に追加する&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;　カートに入れた商品がすでにカート内にあり、価格が異なる場合&lt;br style=&quot;font-size: 14px;&quot;&gt;　　すでにカートに入っている商品を新しく入れた商品の価格に統一する&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　カートの中のカタログ商品の種類の数が10を超えたらエラーとする&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　IllegalArgumentException&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　メッセージ:&amp;nbsp;カートには10商品を超えて入れることはできません&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　カタログ商品で設定されている購入限度数を超えて同じ商品をカートに入れた&lt;br&gt;場合はエラーとする&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　IllegalArgumentException&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　メッセージ:&amp;nbsp;購入限度数%sを超えてカートに入れることはできません&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　　　　%s := カタログ商品の購入限度数 (int)&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;modifyItemInCart(CatalogItem): void&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;/b&gt;　カート画面でカタログ商品の商品数を変更する&lt;br style=&quot;font-size: 14px;&quot;&gt;　&lt;br&gt;　カタログデータから商品情報を取得して、最新データで変更登録する&lt;br&gt;　(カートに入れた後で限度数等が変更となっている可能性があるため)&lt;br style=&quot;font-size: 14px;&quot;&gt;　カタログ商品で設定されている購入限度数を超えて増やした場合はエラーとする&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　IllegalArgumentException&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　メッセージ:&amp;nbsp;購入限度数%sを超えてカートに入れることはできません&lt;br style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　　　　%s := カタログ商品の購入限度数 (int)&lt;br style=&quot;font-size: 14px;&quot;&gt;　購入希望数が0の場合はカートから削除する&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;clearCart(): void&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;/b&gt;　カートの中身を全て削除する" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;" parent="vlHc9PdUAqYkRJqdDarg-1" vertex="1">
+          <mxGeometry x="74" y="2438" width="540" height="690" as="geometry" />
         </mxCell>
         <mxCell id="FTW7f_11OwNevTKoCRsK-0" value="各レイヤーごとに独自のData Modelを持ちます&lt;br&gt;&lt;br&gt;プレゼンテーション・レイヤー&lt;br&gt;　コントローラー(API)を実装し、ResponseとしてView用のデータを返します&lt;br&gt;&lt;br&gt;ユースケース・レイヤー&lt;br&gt;　業務フローを実装したもの&lt;br&gt;　DataとしてはRepositoryから取得したドメインモデルを使用し、&lt;br&gt;　結果をDTO(Data Transfer Object)を用いて表現する&lt;br&gt;&lt;br&gt;ドメインレイヤー&lt;br&gt;　ドメインモデル : 業務ロジックと業務ルールを実装したもの&lt;br&gt;　イミュータブルであり、プロパティにValueObjectを使用する&lt;br&gt;&lt;br&gt;インスラストラクチャレイヤー&lt;br&gt;　永続化処理 (DB保存) を行う" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;" parent="vlHc9PdUAqYkRJqdDarg-1" vertex="1">
           <mxGeometry x="74" y="-90" width="510" height="280" as="geometry" />
@@ -3379,10 +3420,10 @@
           <mxGeometry x="1260" y="1175" width="260" height="40" as="geometry" />
         </mxCell>
         <mxCell id="FTW7f_11OwNevTKoCRsK-13" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;lombok アノーテーションについて&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;アノーテーションを付加することで、コンパイル時に自動的にコードが生成されます&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;　@AllArgsConstructor&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　　すべてのフィールドを含めたコンストラクタを作成します&lt;/div&gt;&lt;div style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　@NoArgsConstructor&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　　パラメータのないコンストラクターを生成します&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　@Getter&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　　フィールドに対するGetterメソッドを作成します&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　@Setter&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　　フィールドに対するSetterメソッドを作成します&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;　@Data&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;　　@ToString, @EqualsAndHashCode, @Getter, @Setter, @RequiredArgsConstructorを合わせたものです&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　@Builder&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　　クラスを生成する際にビルダーパターンでの生成を提供します&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　　&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Helvetica;" parent="vlHc9PdUAqYkRJqdDarg-1" vertex="1">
-          <mxGeometry x="677.75" y="2870" width="683" height="360" as="geometry" />
+          <mxGeometry x="677.75" y="2893" width="683" height="336" as="geometry" />
         </mxCell>
         <mxCell id="FTW7f_11OwNevTKoCRsK-14" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;データベース用に使用されるアノーテーション&lt;/div&gt;&lt;div style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　@Entity&lt;/div&gt;&lt;div style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;　　テーブルとして生成されます&lt;/div&gt;&lt;div style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　@Id&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　　テーブルの主キーとなります&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　@OnToOne, OneToMany, ManyToOne, ManyToMany&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　　テーブルのリレーションを表します&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　　それぞれ　1 対 1、1 対 多、多 対 1、多 対 多　となります&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　　多: nと表すことが一般的&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　　　n - n の場合は中間テーブルを必要となります&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　　　Jpaではn - nの場合自動的に中間テーブルを作成します&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　　&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;　　&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Helvetica;" parent="vlHc9PdUAqYkRJqdDarg-1" vertex="1">
-          <mxGeometry x="679.25" y="3250" width="683" height="240" as="geometry" />
+          <mxGeometry x="678.5" y="3242" width="683" height="240" as="geometry" />
         </mxCell>
         <mxCell id="FTW7f_11OwNevTKoCRsK-15" value="CartTable_CartItemTable" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontSize=12;strokeColor=#7EA6E0;strokeWidth=2;fillColor=default;" parent="vlHc9PdUAqYkRJqdDarg-1" vertex="1">
           <mxGeometry x="1280" y="1215" width="220" height="78" as="geometry" />

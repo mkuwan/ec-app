@@ -11,6 +11,7 @@ spring:
     init:
       encoding: utf-8
       mode: always
+      continue-on-error: true
   jpa:
     properties:
       hibernate:
@@ -18,5 +19,8 @@ spring:
         format_sql: true
         enable_lazy_load_no_trans: true
     hibernate:
+      # create: entityテーブルがあれば削除し、再生成を行う。
+      # create-drop: entityテーブルがあれば削除し、再生成を行う。また、Springboot終了時にテーブルを削除する。
+      # update: Entityのテーブルがない場合、作成する。
       ddl-auto: create-drop
     show-sql: true
