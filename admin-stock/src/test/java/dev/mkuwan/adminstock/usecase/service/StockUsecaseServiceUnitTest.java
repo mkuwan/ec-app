@@ -33,7 +33,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-class StockUsecaseServiceTest {
+class StockUsecaseServiceUnitTest {
 
     @Mock
     private IStockRepository stockRepositoryMock;
@@ -153,6 +153,32 @@ class StockUsecaseServiceTest {
 
         // assertion
         assertTrue(stockDtoList.size() == 0);
+    }
+
+    @Test
+    void getStock_ReturnOneItem(){
+        // arrange
+        var stockUsecaseService = new StockUsecaseService(stockEventPublisher, stockRepositoryMock);
+        List<StockModel> stockModels = new ArrayList<>();
+        List<StockItem> stockItems = new ArrayList<>();
+        WareHouse wareHouse = new WareHouse(UUID.randomUUID().toString(), "倉庫A");
+        StockUser userA = new StockUser(UUID.randomUUID().toString(), "userA");
+        StockUser userB = new StockUser(UUID.randomUUID().toString(), "userB");
+        stockItems.add(new StockItem(UUID.randomUUID().toString(),
+                "商品1", 10, 1500, LocalDate.now(),"","",
+                wareHouse, LocalDateTime.now(), userA, LocalDateTime.now(), userB));
+        stockModels.add(new StockModel(UUID.randomUUID().toString(),
+                new DisplayName("testItem"),
+                3000, 10, 5, "説明",
+                stockItems, "SERIAL001", true,
+                LocalDateTime.now(), userA, LocalDateTime.now(), userB));
+        when(stockRepositoryMock.getStocks()).thenReturn(stockModels);
+
+        // act
+        List<StockDto> stockDtoList = stockUsecaseService.getStocks();
+
+        // assertion
+        assertTrue(stockDtoList.size() == 1);
     }
 
 }

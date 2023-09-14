@@ -77,6 +77,6 @@ public class StockUsecaseService implements IStockUsecaseService{
         model.modifyStockItem(modifiedItem);
 
         // Repository Save
-
+        stockRepository.save(model);
     }
 }
