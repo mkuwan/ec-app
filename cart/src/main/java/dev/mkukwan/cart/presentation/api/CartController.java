@@ -5,8 +5,10 @@ import dev.mkukwan.cart.presentation.viewmodel.CartItemViewModel;
 import dev.mkukwan.cart.presentation.viewmodel.CartViewModel;
 import dev.mkukwan.cart.usecase.service.CartUseCaseService;
 import dev.mkukwan.cart.usecase.service.ICartUseCaseService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.ServerRequest;
 
 @RestController
 @RequestMapping(path = "/api/v1/cart")
@@ -43,6 +45,7 @@ public class CartController {
                     .body(result);
 
         } catch (Exception ex){
+            System.out.println("Bad Request:= " + ex.getMessage());
             CartViewModel response = new CartViewModel(request.getCartId(), request.getBuyerId(),
                     null, ex.getMessage());
             return ResponseEntity.badRequest()

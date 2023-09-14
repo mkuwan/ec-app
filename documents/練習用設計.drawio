@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-09-13T12:00:27.442Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="lIjY3bEQV-JHDnNgpR8C" version="21.6.8" type="device" pages="13">
+<mxfile host="Electron" modified="2023-09-14T06:20:11.314Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="CggxB2eg0Yw6KP6JHEfh" version="21.6.8" type="device" pages="13">
   <diagram id="cMnE_LYomMNR2ONjdC-j" name="基本概念">
     <mxGraphModel dx="1098" dy="1175" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -2781,7 +2781,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="＊カート機能設計(誰でも)" id="SD1Si8Ip-qQFhNXS6QBH">
-    <mxGraphModel dx="1682" dy="4682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1573" dy="4682" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="vlHc9PdUAqYkRJqdDarg-0" />
         <mxCell id="vlHc9PdUAqYkRJqdDarg-1" parent="vlHc9PdUAqYkRJqdDarg-0" />

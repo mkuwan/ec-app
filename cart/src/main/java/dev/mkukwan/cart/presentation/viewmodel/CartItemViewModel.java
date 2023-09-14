@@ -3,9 +3,11 @@ package dev.mkukwan.cart.presentation.viewmodel;
 import dev.mkukwan.cart.usecase.dto.CartItemDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.text.NumberFormat;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class CartItemViewModel {

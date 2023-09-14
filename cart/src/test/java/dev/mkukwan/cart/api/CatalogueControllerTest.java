@@ -19,6 +19,7 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -46,7 +47,7 @@ class CatalogueControllerTest {
 
     @AfterEach
     void tearDown(){
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 15; i++){
             catalogueItemJpaRepository.deleteById("item-id-" + (i + 1));
         }
     }
@@ -68,6 +69,8 @@ class CatalogueControllerTest {
         assertEquals(10, catalogueList.size());
 
     }
+
+
 }
 
 /**
