@@ -30,16 +30,8 @@ public class CartModel implements IAggregate{
         if(cartItems == null)
             this.cartItems = new ArrayList<>();
         else{
-            // 既存と入れ替えしてますが不要かも
-//            List<CartItem> items = new ArrayList<>();
-//            cartItems.forEach(x -> {
-//                items.add(new CartItem(this.cartId, x.itemId(), x.itemName(),
-//                        x.expectedPrice(), x.expectedAmount(), x.itemLimitedCount()));
-//            });
-//            this.cartItems = items;
             this.cartItems = cartItems;
         }
-
     }
 
     public String CartId() {
@@ -64,8 +56,7 @@ public class CartModel implements IAggregate{
         // カートに同じ商品がある場合は既存のリストデータを削除して新しいもので追加して更新します
         // こうすることで、もし新しい価格で更新されたりした場合に対応できます
         if(existedSameItem != null){
-            var amount = existedSameItem.expectedAmount();
-            var resultAmount = amount + item.expectedAmount();
+            var resultAmount = existedSameItem.expectedAmount() + item.expectedAmount();
 
             // 購入可能限度数を超えてカートに入れることはできない
             if(resultAmount > item.itemLimitedCount()){
@@ -83,7 +74,7 @@ public class CartModel implements IAggregate{
                     item.itemLimitedCount()));
         } else {
             // カートに同じ商品がない場合
-            // カートの中に10商品ある場合はそれ以上は追加できない
+            // カートの中にすでに10商品ある場合はそれ以上は追加できない
             if(cartItems.size() == 10){
                 throw new IllegalArgumentException("カートには10商品を超えて入れることはできません");
             }

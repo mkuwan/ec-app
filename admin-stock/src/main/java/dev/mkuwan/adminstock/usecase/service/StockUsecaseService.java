@@ -25,7 +25,10 @@ public class StockUsecaseService implements IStockUsecaseService{
         this.stockRepository = stockRepository;
     }
 
-
+    /**
+     * 在庫商品リストを取得
+     * @return
+     */
     @Override
     public List<StockDto> getStocks() {
         var stocks = stockRepository.getStocks();
@@ -38,19 +41,36 @@ public class StockUsecaseService implements IStockUsecaseService{
         return stockDtoList;
     }
 
+    /**
+     * 在庫商品を1つ取得
+     * @param stockId
+     * @return
+     */
     @Override
-    public void determineSalesPrice(StockDto stock) {
+    public StockDto getStock(String stockId) {
+        var stock = stockRepository.getStock(stockId);
 
+        if(stock == null)
+            return null;
+
+        return StockDto.fromModel(stock);
     }
 
     @Override
-    public void fixLimitedAmount(StockDto stock) {
-
+    public StockDto determineSalesPrice(String stockId, long rePrice) {
+        var stockModel = stockRepository.getStock(stockId);
+        stockModel.determineSalesPrice(rePrice);
+        return StockDto.fromModel(stockModel);
     }
 
     @Override
-    public void specifyDisplayName(StockDto stock) {
+    public StockDto fixLimitedAmount(StockDto stock) {
+        return null;
+    }
 
+    @Override
+    public StockDto specifyDisplayName(StockDto stock) {
+        return null;
     }
 
 

@@ -27,6 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -44,6 +48,9 @@ class StockUsecaseServiceUnitTest {
 
     @MockBean
     private StockEventListener stockEventListenerMock;
+
+    @Autowired
+    private IStockUsecaseService stockUsecaseService;
 
     private AutoCloseable autoCloseable;
 
@@ -116,13 +123,13 @@ class StockUsecaseServiceUnitTest {
         verify(stockEventListenerMock).onApplicationEvent(any(StockEvent.class));
     }
 
-    /**
+     /**
      * 正常系
-     * StockUsecaseServiceのgetStockのUnit Test
+     * StockUsecaseServiceのgetStocksのUnit Test
      * Repositoryはモックにしている
      */
     @Test
-    void getStock_Success(){
+    void getStocks_Success(){
         // arrange
         List<StockModel> stockModels = new ArrayList<>();
         var stockIdA = UUID.randomUUID().toString();
@@ -132,33 +139,40 @@ class StockUsecaseServiceUnitTest {
         stockModels.add(stockA);
         stockModels.add(stockB);
 
-        var stockUsecaseService = new StockUsecaseService(stockEventPublisher, stockRepositoryMock);
+        var mockedStockUsecaseService = new StockUsecaseService(stockEventPublisher, stockRepositoryMock);
         when(stockRepositoryMock.getStocks()).thenReturn(stockModels);
 
         // act
-        List<StockDto> stockDtoList = stockUsecaseService.getStocks();
+        List<StockDto> stockDtoList = mockedStockUsecaseService.getStocks();
 
         // assertion
         assertTrue(stockDtoList.size() == 2);
     }
 
+    /**
+     * 在庫リスト取得　
+     * DBに値がないため空となる
+     */
     @Test
-    void getStock_ReturnEmpty(){
+    void getStocks_ReturnEmpty(){
         // arrange
-        var stockUsecaseService = new StockUsecaseService(stockEventPublisher, stockRepositoryMock);
+        var mockedStockUsecaseService = new StockUsecaseService(stockEventPublisher, stockRepositoryMock);
         when(stockRepositoryMock.getStocks()).thenReturn(null);
 
         // act
-        List<StockDto> stockDtoList = stockUsecaseService.getStocks();
+        List<StockDto> stockDtoList = mockedStockUsecaseService.getStocks();
 
         // assertion
         assertTrue(stockDtoList.size() == 0);
     }
 
+    /**
+     * 在庫リスト取得　1商品だけが戻る
+     */
     @Test
-    void getStock_ReturnOneItem(){
+    void getStocks_ReturnOneItem(){
         // arrange
-        var stockUsecaseService = new StockUsecaseService(stockEventPublisher, stockRepositoryMock);
+        var mockedStockUsecaseService = new StockUsecaseService(stockEventPublisher, stockRepositoryMock);
         List<StockModel> stockModels = new ArrayList<>();
         List<StockItem> stockItems = new ArrayList<>();
         WareHouse wareHouse = new WareHouse(UUID.randomUUID().toString(), "倉庫A");
@@ -175,10 +189,190 @@ class StockUsecaseServiceUnitTest {
         when(stockRepositoryMock.getStocks()).thenReturn(stockModels);
 
         // act
-        List<StockDto> stockDtoList = stockUsecaseService.getStocks();
+        List<StockDto> stockDtoList = mockedStockUsecaseService.getStocks();
 
         // assertion
         assertTrue(stockDtoList.size() == 1);
     }
 
+    /**
+     * 単品在庫取得
+     */
+    @Test
+    void getStock_Success(){
+        // arrange
+        List<StockModel> stockModels = new ArrayList<>();
+        var stockIdA = UUID.randomUUID().toString();
+        var stockA = stubModelById(stockIdA);
+        var stockIdB = UUID.randomUUID().toString();
+        var stockB = stubModelById(stockIdB);
+        stockModels.add(stockA);
+        stockModels.add(stockB);
+
+        var mockedStockUsecaseService = new StockUsecaseService(stockEventPublisher, stockRepositoryMock);
+        when(stockRepositoryMock.getStock(stockIdA)).thenReturn(stockModels.get(0));
+
+        // act
+        var stockDto = mockedStockUsecaseService.getStock(stockIdA);
+
+        // assertion
+        assertTrue(stockDto != null);
+        verify(stockRepositoryMock, times(1)).getStock(stockIdA);
+
+        // assertion by AssertJ
+        assertThat(stockDto.getStockId()).isEqualTo(stockIdA);
+    }
+
+    /**
+     * 単品在庫取得　
+     * DBに値がないため空となる
+     */
+    @Test
+    void getStock_ReturnEmpty(){
+        // arrange
+        var mockedStockUsecaseService = new StockUsecaseService(stockEventPublisher, stockRepositoryMock);
+        when(stockRepositoryMock.getStock("testId")).thenReturn(null);
+
+        // act
+        var stockDto = mockedStockUsecaseService.getStock("testId");
+
+        // assertion
+        assertNull(stockDto);
+        // by AssertJ
+        assertThat(stockDto).isNull();
+    }
+
+    /**
+     * 正常系
+     * 価格修正　成功
+     * 在庫リスト取得 -> 1つの商品を選択 -> 価格修正
+     */
+    @Test
+    void determineSalesPrice_Success() {
+        // arrange
+        var mockedStockUsecaseService = new StockUsecaseService(stockEventPublisher, stockRepositoryMock);
+        List<StockModel> stockModels = new ArrayList<>();
+        List<StockItem> stockItems = new ArrayList<>();
+        WareHouse wareHouse = new WareHouse(UUID.randomUUID().toString(), "倉庫A");
+        StockUser userA = new StockUser(UUID.randomUUID().toString(), "userA");
+        StockUser userB = new StockUser(UUID.randomUUID().toString(), "userB");
+        stockItems.add(new StockItem(UUID.randomUUID().toString(),
+                "商品1", 10, 1500, LocalDate.now(),"","",
+                wareHouse, LocalDateTime.now(), userA, LocalDateTime.now(), userB));
+        var stockId = UUID.randomUUID().toString();
+        stockModels.add(new StockModel(stockId,
+                new DisplayName("testItem"),
+                3000, 10, 5, "説明",
+                stockItems, "SERIAL001", true,
+                LocalDateTime.now(), userA, LocalDateTime.now(), userB));
+        when(stockRepositoryMock.getStocks()).thenReturn(stockModels);
+        when(stockRepositoryMock.getStock(stockId)).thenReturn(stockModels.get(0));
+
+        // act
+        List<StockDto> stockDtoList = mockedStockUsecaseService.getStocks();
+        var selectedStock = stockDtoList
+                .stream()
+                .filter(x -> x.getStockId().equals(stockId))
+                .findFirst()
+                .get();
+        var rePrice = 4000;
+        var selectedForRePriceStockDto = mockedStockUsecaseService.getStock(selectedStock.getStockId());
+
+        selectedForRePriceStockDto.setSalesPrice(rePrice);
+        var rePricedStockDto = mockedStockUsecaseService.determineSalesPrice(selectedStock.getStockId(), rePrice);
+
+        // assert
+        assertThat(rePricedStockDto.getSalesPrice()).isEqualTo(rePrice);
+
+    }
+
+    /**
+     * 異常系
+     * 価格修正: 1.5倍未満
+     */
+    @Test
+    void determineSalesPriceLessThanAverageCostPrice_ThrowError() {
+        // arrange
+        var mockedStockUsecaseService = new StockUsecaseService(stockEventPublisher, stockRepositoryMock);
+        List<StockModel> stockModels = new ArrayList<>();
+        List<StockItem> stockItems = new ArrayList<>();
+        WareHouse wareHouse = new WareHouse(UUID.randomUUID().toString(), "倉庫A");
+        StockUser userA = new StockUser(UUID.randomUUID().toString(), "userA");
+        StockUser userB = new StockUser(UUID.randomUUID().toString(), "userB");
+        stockItems.add(new StockItem(UUID.randomUUID().toString(),
+                "商品1", 10, 1500, LocalDate.now(),"","",
+                wareHouse, LocalDateTime.now(), userA, LocalDateTime.now(), userB));
+        var stockId = UUID.randomUUID().toString();
+        stockModels.add(new StockModel(stockId,
+                new DisplayName("testItem"),
+                3000, 10, 5, "説明",
+                stockItems, "SERIAL001", true,
+                LocalDateTime.now(), userA, LocalDateTime.now(), userB));
+        when(stockRepositoryMock.getStocks()).thenReturn(stockModels);
+        when(stockRepositoryMock.getStock(stockId)).thenReturn(stockModels.get(0));
+
+        // act
+        List<StockDto> stockDtoList = mockedStockUsecaseService.getStocks();
+        var selectedStock = stockDtoList
+                .stream()
+                .filter(x -> x.getStockId().equals(stockId))
+                .findFirst()
+                .get();
+        var rePrice = 2249;
+        var selectedForRePriceStockDto = mockedStockUsecaseService.getStock(selectedStock.getStockId());
+
+        selectedForRePriceStockDto.setSalesPrice(rePrice);
+
+        Throwable thrown = catchThrowable(() -> mockedStockUsecaseService.determineSalesPrice(selectedStock.getStockId(), rePrice));
+
+        // assert
+        then(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("販売価格は平均仕入れ額1500円の1.5倍以上としてください");
+
+    }
+
+    /**
+     * 異常系
+     * 価格修正: 3倍より大きい
+     */
+    @Test
+    void determineSalesPriceOverThanAverageCostPrice_ThrowError() {
+        // arrange
+        var mockedStockUsecaseService = new StockUsecaseService(stockEventPublisher, stockRepositoryMock);
+        List<StockModel> stockModels = new ArrayList<>();
+        List<StockItem> stockItems = new ArrayList<>();
+        WareHouse wareHouse = new WareHouse(UUID.randomUUID().toString(), "倉庫A");
+        StockUser userA = new StockUser(UUID.randomUUID().toString(), "userA");
+        StockUser userB = new StockUser(UUID.randomUUID().toString(), "userB");
+        stockItems.add(new StockItem(UUID.randomUUID().toString(),
+                "商品1", 10, 1500, LocalDate.now(),"","",
+                wareHouse, LocalDateTime.now(), userA, LocalDateTime.now(), userB));
+        var stockId = UUID.randomUUID().toString();
+        stockModels.add(new StockModel(stockId,
+                new DisplayName("testItem"),
+                3000, 10, 5, "説明",
+                stockItems, "SERIAL001", true,
+                LocalDateTime.now(), userA, LocalDateTime.now(), userB));
+        when(stockRepositoryMock.getStocks()).thenReturn(stockModels);
+        when(stockRepositoryMock.getStock(stockId)).thenReturn(stockModels.get(0));
+
+        // act
+        List<StockDto> stockDtoList = mockedStockUsecaseService.getStocks();
+        var selectedStock = stockDtoList
+                .stream()
+                .filter(x -> x.getStockId().equals(stockId))
+                .findFirst()
+                .get();
+        var rePrice = 4501;
+        var selectedForRePriceStockDto = mockedStockUsecaseService.getStock(selectedStock.getStockId());
+
+        selectedForRePriceStockDto.setSalesPrice(rePrice);
+
+        Throwable thrown = catchThrowable(() -> mockedStockUsecaseService.determineSalesPrice(selectedStock.getStockId(), rePrice));
+
+        // assert
+        then(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("販売価格は平均仕入れ額1500円の3.0倍以下としてください");
+
+    }
 }

@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 class CartModelTest {
@@ -25,10 +28,14 @@ class CartModelTest {
         // act
         CartModel model = new CartModel(null, null, null);
 
-        // assertion
+        // assertion by Junit
         assertNotEquals(null, model.CartId());
         assertNotEquals(null, model.Buyer().buyerId());
         assertEquals(new ArrayList<CartItem>(), model.CartItems());
+        // assertion by AssertJ
+        assertThat(model.CartId()).isNotNull();
+        assertThat(model.Buyer().buyerId()).isNotNull();
+        assertThat(model.CartItems()).isEqualTo(new ArrayList<CartItem>());
     }
 
     /**
@@ -48,6 +55,11 @@ class CartModelTest {
 
         // assertion
         assertEquals(1, cartModel.CartItems().size());
+
+        assertThat(cartModel.CartItems().size()).isEqualTo(1);
+        assertThat(cartModel).matches(p -> p.CartItems().size() == 1);
+        var itemInCart = cartModel.CartItems().get(0);
+        assertThat(itemInCart).matches(p -> p.itemName().equals("商品A"));
     }
 
     /**
@@ -68,6 +80,14 @@ class CartModelTest {
         Exception exception = assertThrows(IllegalArgumentException.class,
                 () -> cartModel.putItemIntoCart(item));
         assertEquals("購入限度数5を超えてカートに入れることはできません", exception.getMessage());
+
+        // assertion by AssertJ
+        assertThat(exception.getMessage()).startsWith("購入限度数").endsWith("カートに入れることはできません");
+        assertThat(exception.getMessage()).contains("5");
+
+        Throwable thrown = catchThrowable(() -> cartModel.putItemIntoCart(item));
+        then(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("購入限度数5を超えてカートに入れることはできません");
     }
 
     /**
@@ -93,6 +113,7 @@ class CartModelTest {
         Exception exception = assertThrows(IllegalArgumentException.class,
                 () -> cartModel.putItemIntoCart(addItem));
         assertEquals("購入限度数5を超えてカートに入れることはできません", exception.getMessage());
+
     }
 
     /**
@@ -165,7 +186,7 @@ class CartModelTest {
 
     /**
      * 異常系
-     * カート内の商品を購入限度数以上に増加させる
+     * カート内の商品を変更で購入限度数以上に増加させる
      */
     @Test
     void modifyItem_AddOverExpectedItem_ThrowError(){
@@ -184,7 +205,7 @@ class CartModelTest {
 
         // assert
         Exception exception = assertThrows(IllegalArgumentException.class,
-                () -> cartModelTest.putItemIntoCart(addItem));
+                () -> cartModelTest.modifyItemInCart(addItem));
         assertEquals("購入限度数5を超えてカートに入れることはできません", exception.getMessage());
 
     }
